@@ -33,4 +33,19 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [];
+
+    public function getAuthPassword()
+    {
+        return $this->password_hash;
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'login';
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->login;
+    }
 }

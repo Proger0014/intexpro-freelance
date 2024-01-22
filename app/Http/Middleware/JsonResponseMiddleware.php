@@ -29,17 +29,6 @@ class JsonResponseMiddleware
     {
         $request->headers->set('Accept', 'application/json');
 
-
-        $response = $next($request);
-
-        if (!$response instanceof JsonResponse) {
-            $response = $this->responseFactory->json(
-                $response->getContent(),
-                $response->getStatusCode(),
-                $response->headers->all()
-            );
-        }
-
-        return $response;
+        return $next($request);
     }
 }

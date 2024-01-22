@@ -36,8 +36,12 @@ return [
     */
 
     'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users'
+        ],
         'api' => [
-            'driver' => '',
+            'driver' => 'sanctum',
             'provider' => 'users',
         ],
     ],
@@ -64,11 +68,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Infrastructure\Data\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
