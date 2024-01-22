@@ -8,7 +8,6 @@
 .env
 .env.*
 !.env.example
-!.env.development
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
