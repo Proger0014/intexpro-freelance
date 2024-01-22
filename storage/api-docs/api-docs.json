@@ -1,0 +1,20 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Auth",
+        "description": "Отвечает за авторизацию",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "operationId": "login",
+                "responses": {
+                    "200": {
+                        "description": "Войти в систему или получить токены"
+                    }
+                }
+            }
+        }
+    }
+}

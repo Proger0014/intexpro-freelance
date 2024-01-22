@@ -15,9 +15,10 @@ interface UserService {
      *  date_of_birth: DateTime,
      *  rating: float
      * } $newUser
-     * 
+     *
      * @param string $password
-     * 
+     *
+     *
      * @return Result
      */
     function addNewUser(array $newUser, string $password): Result;
@@ -42,6 +43,8 @@ interface UserService {
      *  date_of_birth: DateTime|null,
      *  rating: float|null
      * } $updatedUser
+     *
+     * @return Result
      */
     function updateUser(array $updatedUser): Result;
 
