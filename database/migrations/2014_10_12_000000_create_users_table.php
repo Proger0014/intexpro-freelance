@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('login')->unique();
             $table->string('password_hash');
             $table->timestamp('date_of_birth');
-            $table->decimal('rating', 5, 2);
+            $table->decimal('rating', 5, 2)->nullable();
             $table->timestamps();
         });
     }
