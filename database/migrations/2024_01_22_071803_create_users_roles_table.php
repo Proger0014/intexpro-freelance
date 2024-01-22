@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('role_id')->references('id')->on('roles')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            
-            $table->timestamp('created_at');
+
+            $table->timestamp('created_at')->nullable();
         });
     }
 
