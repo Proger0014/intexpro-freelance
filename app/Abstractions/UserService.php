@@ -46,4 +46,6 @@ interface UserService {
     function updateUser(array $updatedUser): Result;
 
     function getByLogin(string $login): Result;
+
+    function updatePasswordForUser(int $userId, string $newPassword): Result;
 }
