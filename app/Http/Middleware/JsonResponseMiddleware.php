@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Api\Http\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Routing\ResponseFactory;
