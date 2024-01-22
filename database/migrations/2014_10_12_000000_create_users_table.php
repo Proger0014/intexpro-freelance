@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('surname');
             $table->string('login')->unique();
             $table->string('password_hash');
-            $table->date('date_of_birth');
+            $table->timestamp('date_of_birth');
             $table->decimal('rating', 5, 2);
             $table->timestamps();
         });

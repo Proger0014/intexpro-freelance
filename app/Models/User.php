@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $guarded = [
-        'id', 'added_at'
+        'id', 'created_at'
     ];
 
     /**
@@ -32,7 +33,9 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [];
+    protected $casts = [
+        'date_of_birth' => 'datetime'
+    ];
 
     public function getAuthPassword()
     {
@@ -47,5 +50,9 @@ class User extends Authenticatable
     public function getAuthIdentifier()
     {
         return $this->login;
+    }
+
+    public function roles(): BelongsToMany {
+        return $this->belongsToMany(Role::class, 'roles_users', 'user_id', 'role_id');
     }
 }
