@@ -5,6 +5,7 @@ namespace App\Abstractions;
 use App\Utils\Result;
 use App\Dto\User\UserDto;
 use App\Http\Resources\User\UserResource;
+use App\Http\Resources\User\UserCollectionResource;
 
 interface UserService {
 
@@ -24,21 +25,21 @@ interface UserService {
     function getById(int $id): Result;
 
     /**
-     * @return Result<null>
+     * @return Result<UserCollectionResource>
      */
     function getAll(): Result;
 
     /**
      * @param int $page
      * 
-     * @return Result<null>
+     * @return Result<UserCollectionResource>
      */
     function getAllInPage(int $page): Result;
 
     /**
      * @param int $userId
      * 
-     * @return Result<null>
+     * @return Result<>
      */
     function getRolesOfUser(int $userId): Result;
 
