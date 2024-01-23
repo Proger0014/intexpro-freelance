@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Http\Responses\Error\HasValidationErrorResponse;
+use App\Http\Responses\Error\ValidationErrorResponse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -14,7 +15,6 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    use HasValidationErrorResponse;
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -45,9 +45,9 @@ class Handler extends ExceptionHandler
     |ResponseFactory
     {
         if ($e instanceof ValidationException) {
-            return response()->json(
-                $this->getValidationErrorResponse($e->errors()),
-                $this->VALIDATION_ERROR_RESPONSE_CODE);
+            $validationErrorResponse = new ValidationErrorResponse($e->errors());
+
+            return response()->json($validationErrorResponse);
         }
 
         return parent::render($request, $e);
