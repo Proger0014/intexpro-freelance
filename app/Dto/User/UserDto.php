@@ -1,8 +1,8 @@
-<?
+<?php
 
 namespace App\Dto\User;
 
-use DateTime;
+use DateTimeImmutable;
 
 final class UserDto {
     public function __construct(
@@ -11,7 +11,7 @@ final class UserDto {
         public readonly ?string $lastName,
         public readonly ?string $surname,
         public readonly ?string $login,
-        public readonly DateTime $dateOfBirth,
-        public readonly float $rating
+        public readonly ?DateTimeImmutable $dateOfBirth,
+        public readonly ?float $rating
     ) { }
 }

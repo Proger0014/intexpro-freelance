@@ -3,25 +3,17 @@
 namespace App\Abstractions;
 
 use App\Utils\Result;
-use DateTime;
+use App\Dto\User\UserDto;
 
 interface UserService {
+
     /**
-     * @param array{
-     *  first_name: string,
-     *  last_name: string,
-     *  surname: string,
-     *  login: string,
-     *  date_of_birth: DateTime,
-     *  rating: float
-     * } $newUser
-     *
+     * @param UserDto $newUser
      * @param string $password
-     *
-     *
+     * 
      * @return Result
      */
-    function addNewUser(array $newUser, string $password): Result;
+    function addNewUser(UserDto $newUser, string $password): Result;
 
     function getById(int $id): Result;
 
@@ -34,19 +26,11 @@ interface UserService {
     function deleteByUserId(int $userId): Result;
 
     /**
-     * @param array{
-     *  id: int,
-     *  first_name: string|null,
-     *  last_name: string|null,
-     *  surname: string|null,
-     *  login: string|null,
-     *  date_of_birth: DateTime|null,
-     *  rating: float|null
-     * } $updatedUser
-     *
+     * @param UserDto $updatedUser
+     * 
      * @return Result
      */
-    function updateUser(array $updatedUser): Result;
+    function updateUser(UserDto $updatedUser): Result;
 
     function getByLogin(string $login): Result;
 
