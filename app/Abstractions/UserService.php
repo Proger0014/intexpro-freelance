@@ -64,7 +64,7 @@ interface UserService {
 
     /**
      * @param int $userId
-     * @param string $password
+     * @param string $newPassword
      * 
      * @return Result<null>
      */
