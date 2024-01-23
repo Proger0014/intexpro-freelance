@@ -2,35 +2,40 @@
 
 namespace App\Utils;
 
+use App\Utils\ResultError;
+
+/**
+ * @template TData
+ */
 final class Result {
     private function __construct() { }
 
     /**
-     * @var array<string, string>|null $data
+     * @var TData|null
      */
-    private ?array $data;
+    private mixed $data;
 
     /**
-     * @var array<string, string>|null $error
+     * @var ResultError|null
      */
-    private ?array $error;
+    private ?ResultError $error;
 
     /**
-     * @return array<string, string>|null
+     * @return TData|null
      */
-    public function getData(): ?array {
+    public function getData(): mixed {
         return $this->data;
     }
 
     /**
-     * @return array<string, string>|null
+     * @return ResultError|null
      */
-    public function getError(): ?array {
+    public function getError(): ?ResultError {
         return $this->error;
     }
 
     public function isSuccess(): bool {
-        return isset($this->data) && count($this->data) > 0;
+        return isset($this->data);
     }
 
     public function isError(): bool {
@@ -38,11 +43,11 @@ final class Result {
     }
 
     /**
-     * @param array<string, string> $data
+     * @param TData $data
      * 
-     * @return Result
+     * @return Result<TData>
      */
-    public static function fromOk(array $data): Result {
+    public static function fromOk(mixed $data): Result {
         $result = new Result();
 
         $result->data = $data;
@@ -51,9 +56,11 @@ final class Result {
     }
 
     /**
+     * @param ResultError $error
      * 
+     * @return Result<null>
      */
-    public static function fromError(array $error): Result {
+    public static function fromError(ResultError $error): Result {
         $result = new Result();
 
         $result->error = $error;
