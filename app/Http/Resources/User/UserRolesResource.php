@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\User;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\User;
 
 /**
  * @mixin User
@@ -18,6 +18,10 @@ class UserRolesResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'user_id' => $this->id,
+            'roles' => UserRoleResource::collection($this->roles())
+                ->additional(['user_id' => $this->id])
+        ];
     }
 }

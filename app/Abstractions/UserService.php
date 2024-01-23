@@ -2,6 +2,7 @@
 
 namespace App\Abstractions;
 
+use App\Http\Resources\User\UserRolesResource;
 use App\Utils\Result;
 use App\Dto\User\UserDto;
 use App\Http\Resources\User\UserResource;
@@ -12,14 +13,14 @@ interface UserService {
     /**
      * @param UserDto $newUser
      * @param string $password
-     * 
+     *
      * @return Result<bool>
      */
     function addNewUser(UserDto $newUser, string $password): Result;
 
     /**
      * @param int $id
-     * 
+     *
      * @return Result<UserResource>
      */
     function getById(int $id): Result;
@@ -31,44 +32,44 @@ interface UserService {
 
     /**
      * @param int $page
-     * 
+     *
      * @return Result<UserCollectionResource>
      */
     function getAllInPage(int $page): Result;
 
     /**
      * @param int $userId
-     * 
-     * @return Result<>
+     *
+     * @return Result<UserRolesResource>
      */
     function getRolesOfUser(int $userId): Result;
 
     /**
      * @param int $userId
-     * 
-     * @return Result<null>
+     *
+     * @return Result<bool>
      */
     function deleteByUserId(int $userId): Result;
 
     /**
      * @param UserDto $updatedUser
-     * 
-     * @return Result<null>
+     *
+     * @return Result<bool>
      */
     function updateUser(UserDto $updatedUser): Result;
 
     /**
      * @param string $login
-     * 
-     * @return Result<null>
+     *
+     * @return Result<UserResource>
      */
     function getByLogin(string $login): Result;
 
     /**
      * @param int $userId
      * @param string $newPassword
-     * 
-     * @return Result<null>
+     *
+     * @return Result<bool>
      */
     function updatePasswordForUser(int $userId, string $newPassword): Result;
 }
