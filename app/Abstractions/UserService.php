@@ -4,6 +4,7 @@ namespace App\Abstractions;
 
 use App\Utils\Result;
 use App\Dto\User\UserDto;
+use App\Http\Resources\User\UserResource;
 
 interface UserService {
 
@@ -18,7 +19,7 @@ interface UserService {
     /**
      * @param int $id
      * 
-     * @return Result<null>
+     * @return Result<UserResource>
      */
     function getById(int $id): Result;
 
