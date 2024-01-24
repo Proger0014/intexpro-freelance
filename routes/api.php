@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+
+Route::controller(CsrfCookieController::class)->group(function() {
+    Route::get('/csrf', 'show')->name('csrf')->middleware('web');
+});
 
 Route::controller(AuthController::class)->prefix('/auth')->group(function () {
     Route::post('/login', 'login');
+    Route::post('/test', 'test');
 });

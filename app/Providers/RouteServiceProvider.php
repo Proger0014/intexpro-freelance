@@ -20,11 +20,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::any('/', function (Request $request) {
-                return response()->json();
-            });
-
-            Route::middleware('api')
+            Route::middleware(['api.web', 'api'])
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
         });
