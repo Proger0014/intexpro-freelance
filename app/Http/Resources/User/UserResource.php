@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources\User;
 
+use App\Dto\User\UserDto;
 use App\Models\User;
+use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,5 +32,19 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
+    }
+
+    public function toDto(): UserDto {
+        return new UserDto(
+            $this->id,
+            $this->first_name,
+            $this->last_name,
+            $this->surname,
+            $this->login,
+            new DateTimeImmutable($this->date_of_birth),
+            $this->rating,
+            new DateTimeImmutable($this->created_at),
+            new DateTimeImmutable($this->updated_at)
+        );
     }
 }

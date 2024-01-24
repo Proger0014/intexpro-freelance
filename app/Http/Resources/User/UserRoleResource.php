@@ -2,8 +2,11 @@
 
 namespace App\Http\Resources\User;
 
+use App\Dto\User\UserRoleDto;
 use App\Models\Role;
 use App\Models\UserRolePivot;
+use DateTime;
+use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +17,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class UserRoleResource extends JsonResource
 {
+    private function getGivenAtRole(): string {
+        return UserRolePivot::where('user_id', $this->user_id)
+            ->where('role_id', $this->id)
+            ->first()
+            ->created_at;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -21,14 +31,17 @@ class UserRoleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $givenAtRole = UserRolePivot::where('user_id', '=', $this->user_id)
-            ->where('role_id', '=', $this->id)->first()
-            ->created_at;
-
         return [
             'role_id' => $this->id,
             'role_name' => $this->name,
-            'given_at' => $givenAtRole
+            'given_at' => $this->getGivenAtRole()
         ];
+    }
+
+    public function toDto(): UserRoleDto {
+        return new UserRoleDto(
+            $this->id, 
+            $this->name, 
+            new DateTimeImmutable($this->getGivenAtRole()));
     }
 }

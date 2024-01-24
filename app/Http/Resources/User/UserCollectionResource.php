@@ -39,7 +39,9 @@ class UserCollectionResource extends ResourceCollection
                 $user->surname,
                 $user->login,
                 new DateTimeImmutable($user->date_of_birth),
-                $user->rating
+                $user->rating,
+                new DateTimeImmutable($user->created_at),
+                new DateTimeImmutable($user->updated_at)
             ))->values()->toArray();
     }
 }
