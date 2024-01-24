@@ -22,6 +22,13 @@ interface RoleService
     function getAll(): Result;
 
     /**
+     * @param int $page
+     *
+     * @return Result<RoleCollectionResource|null>
+     */
+    function getAllInPage(int $page): Result;
+
+    /**
      * @param int $roleId
      *
      * @return Result<RoleResource|null>
