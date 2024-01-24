@@ -5,7 +5,6 @@ namespace App\Http\Resources\User;
 use App\Dto\User\UserRoleDto;
 use App\Models\Role;
 use App\Models\UserRolePivot;
-use DateTime;
 use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -40,8 +39,8 @@ class UserRoleResource extends JsonResource
 
     public function toDto(): UserRoleDto {
         return new UserRoleDto(
-            $this->id, 
-            $this->name, 
+            $this->id,
+            $this->name,
             new DateTimeImmutable($this->getGivenAtRole()));
     }
 }
