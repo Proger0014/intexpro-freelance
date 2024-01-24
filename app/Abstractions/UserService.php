@@ -14,54 +14,54 @@ interface UserService {
      * @param UserDto $newUser
      * @param string $password
      *
-     * @return Result<bool>
+     * @return Result<bool|null>
      */
     function addNewUser(UserDto $newUser, string $password): Result;
 
     /**
      * @param int $id
      *
-     * @return Result<UserResource>
+     * @return Result<UserResource|null>
      */
     function getById(int $id): Result;
 
     /**
-     * @return Result<UserCollectionResource>
+     * @return Result<UserCollectionResource|null>
      */
     function getAll(): Result;
 
     /**
      * @param int $page
      *
-     * @return Result<UserCollectionResource>
+     * @return Result<UserCollectionResource|null>
      */
     function getAllInPage(int $page): Result;
 
     /**
      * @param int $userId
      *
-     * @return Result<UserRolesResource>
+     * @return Result<UserRolesResource|null>
      */
     function getRolesOfUser(int $userId): Result;
 
     /**
      * @param int $userId
      *
-     * @return Result<bool>
+     * @return Result<bool|null>
      */
     function deleteByUserId(int $userId): Result;
 
     /**
      * @param UserDto $updatedUser
      *
-     * @return Result<bool>
+     * @return Result<bool|null>
      */
     function updateUser(UserDto $updatedUser): Result;
 
     /**
      * @param string $login
      *
-     * @return Result<UserResource>
+     * @return Result<UserResource|null>
      */
     function getByLogin(string $login): Result;
 
@@ -69,7 +69,7 @@ interface UserService {
      * @param int $userId
      * @param string $newPassword
      *
-     * @return Result<bool>
+     * @return Result<bool|null>
      */
     function updatePasswordForUser(int $userId, string $newPassword): Result;
 }
