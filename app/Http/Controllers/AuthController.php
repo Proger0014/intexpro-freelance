@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Abstractions\RoleService;
 use App\Abstractions\UserService;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -11,7 +10,6 @@ use DateTimeImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use App\Dto\User\UserDto;
 
@@ -20,8 +18,7 @@ use function Laravel\Prompts\password;
 class AuthController extends Controller
 {
     public function __construct(
-        private readonly UserService $userService,
-        private readonly RoleService $roleService
+        private readonly UserService $userService
     ) { }
 
     public function login(LoginRequest $loginRequest): JsonResponse {
@@ -64,13 +61,5 @@ class AuthController extends Controller
         }
 
         return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
-    }
-
-    public function test(Request $request): JsonResponse {
-        if (Gate::allows('customer')) {
-            return response()->json(['status' => 'ok']);
-        }
-
-        return response()->json(['status' => 'forbidden']);
     }
 }
