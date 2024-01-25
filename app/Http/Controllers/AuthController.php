@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Dto\User\UserDto;
 
-use function Laravel\Prompts\password;
-
 class AuthController extends Controller
 {
     public function __construct(

@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GatesRegister $gatesRegister): void
     {
+        $this->registerPolicies();
+
         $gatesRegister->defineGatesForRole();
     }
 }
