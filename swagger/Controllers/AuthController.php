@@ -9,7 +9,7 @@ use Swagger\Schemas\Error\ValidationErrorResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 CONST AUTH_TAG = 'Auth';
-const AUTH = API . '/auth';
+const AUTH = '/auth';
 
 interface AuthController {
     #[OA\Post(
