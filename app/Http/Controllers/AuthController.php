@@ -21,10 +21,16 @@ class AuthController extends Controller
                 detail: 'Попробуйте изменить параметры'
             ));
         }
-
+        
         $loginRequest->session()->regenerate();
 
-        return response()->json();
+        return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
+    }
+
+    public function logout(Request $request): JsonResponse {
+        Auth::guard('web')->logout();
+
+        return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
     }
 
     public function test(Request $request): JsonResponse {
