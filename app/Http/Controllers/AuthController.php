@@ -8,7 +8,6 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Responses\Error\ErrorResponse;
 use DateTimeImmutable;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Dto\User\UserDto;
@@ -34,7 +33,7 @@ class AuthController extends Controller
         return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
     }
 
-    public function logout(Request $request): JsonResponse {
+    public function logout(): JsonResponse {
         Auth::guard('web')->logout();
 
         return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
