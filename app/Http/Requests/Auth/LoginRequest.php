@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Constans\ValidationConstans;
+use App\Constans\ValidationConstants;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
 
@@ -34,14 +34,14 @@ class LoginRequest extends FormRequest
     {
         return [
             // login
-            'login.required' => ValidationConstans::REQUIRED,
-            'login.min' => sprintf(ValidationConstans::MIN, User::DEFAULT_MIN_LENGTH),
-            'login.max' => sprintf(ValidationConstans::MAX, User::DEFAULT_MAX_LENGTH),
+            'login.required' => ValidationConstants::REQUIRED,
+            'login.min' => sprintf(ValidationConstants::MIN, User::DEFAULT_MIN_LENGTH),
+            'login.max' => sprintf(ValidationConstants::MAX, User::DEFAULT_MAX_LENGTH),
 
             // password
-            'password.required' => ValidationConstans::REQUIRED,
-            'password.min' => sprintf(ValidationConstans::MIN, User::DEFAULT_MIN_LENGTH),
-            'password.max' => sprintf(ValidationConstans::MAX, User::DEFAULT_MAX_LENGTH)
+            'password.required' => ValidationConstants::REQUIRED,
+            'password.min' => sprintf(ValidationConstants::MIN, User::DEFAULT_MIN_LENGTH),
+            'password.max' => sprintf(ValidationConstants::MAX, User::DEFAULT_MAX_LENGTH)
         ];
     }
 }

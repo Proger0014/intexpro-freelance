@@ -2,7 +2,7 @@
 
 namespace App\Constans;
 
-class ValidationConstans
+class ValidationConstants
 {
     public const REQUIRED = ":attribute не указан";
     public const MIN = ":attribute должен быть не меньше %d символов";
