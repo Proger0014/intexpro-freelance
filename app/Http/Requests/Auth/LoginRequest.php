@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Constans\ValidationConstans;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
+
 
 class LoginRequest extends FormRequest
 {
@@ -22,8 +25,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login' => 'required|min:8|max:80',
-            'password' => 'required|min:8|max:30'
+            'login' => "required|min:{${User::DEFAULT_MIN_LENGTH}}|max:{${User::DEFAULT_MAX_LENGTH}}",
+            'password' => "required|min:{${User::DEFAULT_MIN_LENGTH}}|max:{${User::DEFAULT_MAX_LENGTH}}"
         ];
     }
 
@@ -31,14 +34,14 @@ class LoginRequest extends FormRequest
     {
         return [
             // login
-            'login.required' => ':attribute не указан',
-            'login.min' => ':attribute должен быть не меньше 8 символов',
-            'login.max' => ':attribute должен быть не больше 80 символов',
+            'login.required' => ValidationConstans::REQUIRED,
+            'login.min' => sprintf(ValidationConstans::MIN, User::DEFAULT_MIN_LENGTH),
+            'login.max' => sprintf(ValidationConstans::MAX, User::DEFAULT_MAX_LENGTH),
 
             // password
-            'password.required' => ':attribute не указан',
-            'password.min' => ':attribute должен быть не меньше 8 символов',
-            'password.max' => ':attribute должен быть не больше 30 символов'
+            'password.required' => ValidationConstans::REQUIRED,
+            'password.min' => sprintf(ValidationConstans::MIN, User::DEFAULT_MIN_LENGTH),
+            'password.max' => sprintf(ValidationConstans::MAX, User::DEFAULT_MAX_LENGTH)
         ];
     }
 }
