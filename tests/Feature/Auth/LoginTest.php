@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\Fluent\AssertableJson;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -29,5 +30,41 @@ class LoginTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_NO_CONTENT);
         $response->assertCookie(config('session.cookie'));
+    }
+
+    #[Test]
+    public function login_invalidRequestWithShortValues_shouldReturnValidationErrorAnd400Status(): void {
+        // Arrange
+        $loginRequest = [
+            'login' => 'short',
+            'password' => 'short'
+        ];
+
+        $expectedValidationErrorResponseWithoutErrorsField = [
+            'type' => '/errors/validation',
+            'title' => 'Ошибка валидации',
+            'status' => Response::HTTP_BAD_REQUEST
+        ];
+
+        $expectedValidationErrors = [
+            'login' => [
+                'login должен быть не меньше 8 символов'
+            ],
+            'password' => [
+                'password должен быть не меньше 8 символов'
+            ]
+        ];
+
+        // Act
+        $response = $this->postJson('/api/auth/login', $loginRequest);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertCookie(config('session.cookie'));
+        $response->assertJson(fn (AssertableJson $json) =>
+            $json
+                ->whereAll($expectedValidationErrorResponseWithoutErrorsField)
+                ->etc());
+        $response->assertJsonValidationErrors($expectedValidationErrors);
     }
 }
