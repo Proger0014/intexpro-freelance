@@ -25,9 +25,9 @@ class AuthController extends Controller
                 title: 'Неверный логин или пароль',
                 status: Response::HTTP_BAD_REQUEST,
                 detail: 'Попробуйте изменить параметры'
-            ));
+            ), Response::HTTP_BAD_REQUEST);
         }
-        
+
         $loginRequest->session()->regenerate();
 
         return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
