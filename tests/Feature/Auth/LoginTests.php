@@ -10,7 +10,6 @@ class LoginTests extends TestCase
 {
     use RefreshDatabase;
 
-
     public function login(): void
     {
     }
