@@ -33,4 +33,22 @@ class LogoutTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * @test
+     */
+    public function logout_unauthenticatedUser_shouldReturnMessageUnauthenticatedAndStatus401(): void {
+        // Arrange
+        $expectedError = [
+            'message' => 'Unauthenticated.'
+        ];
+
+        // Act
+        $response = $this->postJson('api/auth/logout');
+
+        // Assert
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertJson($expectedError);
+
+    }
 }
