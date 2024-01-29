@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Constans\ValidationConstants;
+use App\Constants\ValidationConstants;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
 
