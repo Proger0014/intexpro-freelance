@@ -70,4 +70,32 @@ class LoginTest extends TestCase
                 ->etc());
         $response->assertJsonValidationErrors($expectedValidationErrors);
     }
+
+    /**
+     * @test
+     */
+    public function login_validRequestWithInvalidCredentials_shouldReturnInvalidLoginOrPasswordErrorAnd400Status(): void {
+        // Arrange
+        $loginRequest = [
+            'login' => 'login_invalid_credential',
+            'password' => 'password_invalid_credential'
+        ];
+
+        $expectedError = [
+            'type' => '/errors/invalid-login-or-password',
+            'title' => 'Неверный логин или пароль',
+            'status' => Response::HTTP_BAD_REQUEST,
+            'detail' => 'Попробуйте изменить параметры'
+        ];
+
+        // Act
+        $response = $this->postJson('/api/auth/login', $loginRequest);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertCookie(config('session.cookie'));
+        $response->assertJson(fn (AssertableJson $json) =>
+            $json
+                ->whereAll($expectedError));
+    }
 }
