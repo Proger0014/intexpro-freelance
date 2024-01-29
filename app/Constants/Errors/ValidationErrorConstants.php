@@ -2,8 +2,10 @@
 
 namespace App\Constants\Errors;
 
+use App\Constants\Errors\CommonErrorConstants;
+
 class ValidationErrorConstants
 {
-    public const TYPE = "/errors/validation";
-    public const TITLE = "Ошибка валидации";
+    public const TYPE = CommonErrorConstants::TYPE . '/validation';
+    public const TITLE = 'Ошибка валидации';
 }
