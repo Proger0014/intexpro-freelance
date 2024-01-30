@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 
 class DatabaseSeeder extends Seeder
