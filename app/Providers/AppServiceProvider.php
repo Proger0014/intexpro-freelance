@@ -19,7 +19,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(UserService::class, UserServiceImpl::class);
         $this->app->singleton(RoleService::class, RoleServiceImpl::class);
-        $this->app->singleton(GatesRegister::class, GatesRegister::class);
     }
 
     /**

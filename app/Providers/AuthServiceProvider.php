@@ -23,12 +23,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @throws ErrorException
      */
-    public function boot(GatesRegister $gatesRegister): void
+    public function boot(): void
     {
-        if ($this->app->runningInConsole()) return;
-
         $this->registerPolicies();
-
-        $gatesRegister->defineGatesForRole();
     }
 }
