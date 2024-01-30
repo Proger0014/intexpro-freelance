@@ -7,6 +7,7 @@ use App\Abstractions\UserService;
 use App\Http\Auth\Gates\GatesRegister;
 use App\Services\RoleServiceImpl;
 use App\Services\UserServiceImpl;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Для mysql 8 версии, где utf8mb4 означает максимальную длину 125 символов в гибридном индексе
+        Schema::defaultStringLength(125);
     }
 }
