@@ -64,6 +64,11 @@ class AuthController extends Controller
             rolesId: $registerRequest->input('roles')
         );
 
+        if ($attachUserToRolesResult->isError()) {
+            $error = $attachUserToRolesResult->getError();
+            return response()->json($error, $error->status);
+        }
+
         return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
     }
 }
