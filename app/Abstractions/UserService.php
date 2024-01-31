@@ -14,7 +14,7 @@ interface UserService {
      * @param UserDto $newUser
      * @param string $password
      *
-     * @return Result<bool|null>
+     * @return Result<int|null> int - id created user
      */
     function addNewUser(UserDto $newUser, string $password): Result;
 

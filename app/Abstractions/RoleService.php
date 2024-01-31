@@ -37,9 +37,9 @@ interface RoleService
 
     /**
      * @param int $userId
-     * @param int $roleId
+     * @param array<int> $rolesId
      *
      * @return Result<bool|null>
      */
-    function attachUserToRole(int $userId, int $roleId): Result;
+    function attachUserToRoles(int $userId, array $rolesId): Result;
 }

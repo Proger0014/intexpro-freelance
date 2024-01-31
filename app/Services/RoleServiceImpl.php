@@ -64,32 +64,38 @@ class RoleServiceImpl implements RoleService
         );
     }
 
-    public function attachUserToRole(int $userId, int $roleId): Result
+    public function attachUserToRoles(int $userId, array $rolesId): Result
     {
         $existsUserResult = $this->userService->getById($userId);
-        
+
         if ($existsUserResult->isError()) {
             return Result::fromError($existsUserResult->getError());
         }
-        
-        $existsRoleResult = $this->getById($roleId);
-        
-        if ($existsRoleResult->isError()) {
-            return Result::fromError($existsRoleResult->getError());
-        }
-        
-        $existsRole = Role::whereId($roleId)->first();
 
-        if (!Gate::allows('attachUserToRole', $existsRole)) {
-            return Result::fromError(new ResultError(
-                type: '/errors/forbidden',
-                title: 'Недостаточно прав',
-                status: Response::HTTP_FORBIDDEN,
-                detail: 'Попробуйте обратиться к более вышестоящему для данного действия'
-            ));
+        foreach ($rolesId as $roleId) {
+            $existsRoleResult = $this->getById($roleId);
+
+            if ($existsRoleResult->isError()) {
+                return Result::fromError($existsRoleResult->getError());
+            }
         }
 
-        User::whereId($userId)->first()->assignRole($existsRole->name);
+        foreach ($rolesId as $roleId) {
+            $existsRoleResult = $this->getById($roleId);
+
+            $existsRole = Role::whereId($roleId)->first();
+
+            if (!Gate::allows('attachUserToRole', $existsRole)) {
+                return Result::fromError(new ResultError(
+                    type: '/errors/forbidden',
+                    title: 'Недостаточно прав',
+                    status: Response::HTTP_FORBIDDEN,
+                    detail: 'Попробуйте обратиться к более вышестоящему для данного действия'
+                ));
+            }
+
+            User::whereId($userId)->first()->assignRole($existsRole->name);
+        }
 
         return Result::fromOk(true);
     }

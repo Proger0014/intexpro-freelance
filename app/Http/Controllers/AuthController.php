@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Abstractions\RoleService;
 use App\Abstractions\UserService;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -15,7 +16,8 @@ use App\Dto\User\UserDto;
 class AuthController extends Controller
 {
     public function __construct(
-        private readonly UserService $userService
+        private readonly UserService $userService,
+        private readonly RoleService $roleService
     ) { }
 
     public function login(LoginRequest $loginRequest): JsonResponse {
@@ -40,7 +42,7 @@ class AuthController extends Controller
     }
 
     public function register(RegisterRequest $registerRequest): JsonResponse {
-        $result = $this->userService->addNewUser(new UserDto(
+        $registerNewUserResult = $this->userService->addNewUser(new UserDto(
             id: null,
             firstName: 'Не определено',
             lastName: 'Не определено',
@@ -52,10 +54,15 @@ class AuthController extends Controller
             updatedAt: null
         ), $registerRequest->input('password'));
 
-        if ($result->isError()) {
-            $error = $result->getError();
+        if ($registerNewUserResult->isError()) {
+            $error = $registerNewUserResult->getError();
             return response()->json($error, $error->status);
         }
+
+        $attachUserToRolesResult = $this->roleService->attachUserToRoles(
+            userId: $registerNewUserResult->getData(),
+            rolesId: $registerRequest->input('roles')
+        );
 
         return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
     }
