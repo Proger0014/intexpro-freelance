@@ -30,7 +30,7 @@ class RoleResource extends JsonResource
 
     public function toDto(): RoleDto {
         return new RoleDto(
-            $this->id,
+            (int)$this->id,
             $this->name,
             new DateTimeImmutable($this->created_at),
             new DateTimeImmutable($this->updated_at)
