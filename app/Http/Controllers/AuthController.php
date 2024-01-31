@@ -36,7 +36,7 @@ class AuthController extends Controller
     }
 
     public function logout(): JsonResponse {
-        Auth::guard('web')->logout();
+        Auth::logout();
 
         return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
     }
