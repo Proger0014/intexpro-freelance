@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Database\Seeders\Tests\DatabaseSeederDefault as TestDatabaseSeederDefault;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -14,5 +14,5 @@ abstract class TestCase extends BaseTestCase
     /**
      * @var class-string
      */
-    protected string $seeder = TestDatabaseSeederDefault::class;
+    protected string $seeder = DatabaseSeeder::class;
 }
