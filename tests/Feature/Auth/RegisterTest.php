@@ -5,6 +5,7 @@ namespace Tests\Feature\Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Illuminate\Testing\TestResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Tests\Utils\UserUtils;
@@ -104,5 +105,47 @@ class RegisterTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @test
+     */
+    public function register_customerUserDoubleSameUse_shouldReturnErrorExistsAndStatus400(): void {
+        // Arrange
+        $customer = UserUtils::getUserWithRole('customer');
+
+        $loginRequest = [
+            'login' => $customer->login,
+            'password' => 'password'
+        ];
+
+        $registerRequest = [
+            'login' => 'new_user@new_user.new_user',
+            'password' => 'password',
+            'roles' => [
+                1
+            ]
+        ];
+
+        $expectedError = [
+            'type' => '/errors/exists',
+            'title' => 'Юзер с таким логином уже существует',
+            'status' => Response::HTTP_BAD_REQUEST,
+            'detail' => 'Попробуйте изменить логин или войти в существующий аккаунт'
+        ];
+
+        $cookie = $this->postJson('/api/auth/login', $loginRequest)
+            ->getCookie(config('session.cookie'));
+
+        $action = fn(): TestResponse => $this->withCookie(config('session.cookie'), $cookie->getValue())
+            ->postJson('/api/auth/register', $registerRequest);
+
+        // Act
+        $action();
+        $response = $action();
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJson($expectedError);
     }
 }
