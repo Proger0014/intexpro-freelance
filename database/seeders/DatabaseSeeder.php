@@ -28,11 +28,13 @@ class DatabaseSeeder extends Seeder
         });
 
         User::factory(rand(5, 25))->create()->each(function (User $user) use ($createdRoles) {
+            $randomRoleForUser = Arr::random([ 'executor', 'customer', 'admin'], 1);
+
             collect($createdRoles)
-                ->where(fn (Role $role) => $role->name, Arr::random([ 'executor', 'customer', 'admin'], 1))
+                ->filter(fn (Role $role) => in_array($role->name, $randomRoleForUser))
                 ->each(function (Role $role) use ($user) {
-                $user->assignRole($role);
-            });
+                    $user->assignRole($role);
+                });
         });
     }
 
