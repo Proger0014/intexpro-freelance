@@ -24,6 +24,8 @@ class RegisterRequest extends FormRequest
         return [
             'login' => 'required|min:10|max:30',
             'password' => 'required|min:8|max:30',
+            'roles' => 'required|array',
+            'roles.*' => 'required|digits_between:0,2000'
         ];
     }
 
