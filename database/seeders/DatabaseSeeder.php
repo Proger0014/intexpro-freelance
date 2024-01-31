@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
             'customer' => [
                 'role.read',
                 'user.*',
-                'role.assign-to-user.customer'
+                'role.assign-to-user.executor'
             ],
         ];
 
