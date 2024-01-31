@@ -5,7 +5,7 @@ namespace App\Utils;
 use App\Utils\ResultError;
 
 /**
- * @template TData
+ * @template-covariant TData
  */
 final class Result {
     private function __construct() { }

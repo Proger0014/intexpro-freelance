@@ -2,21 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Permission\Models\Role as SpatieRole;
 
-class Role extends Model
+class Role extends SpatieRole
 {
-    use HasFactory;
 
-    protected $guarded = [
-        'id', 'created_at'
-    ];
-
-    public function users(): BelongsToMany {
-        return $this->belongsToMany(User::class, 'users_roles', 'role_id', 'user_id')
-            ->withPivot('created_at')
-            ->using(UserRolePivot::class);
-    }
 }
