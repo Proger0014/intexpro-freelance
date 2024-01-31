@@ -32,6 +32,7 @@ class UserServiceImpl implements UserService {
             'surname' => $newUser->surname,
             'login' => $newUser->login,
             'password_hash' => Hash::make($password),
+            'date_of_birth' => $newUser->dateOfBirth,
             'rating' => 0.0
         ]);
 
