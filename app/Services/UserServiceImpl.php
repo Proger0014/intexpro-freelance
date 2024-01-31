@@ -26,7 +26,7 @@ class UserServiceImpl implements UserService {
             ));
         }
 
-        User::create([
+        $id = User::create([
             'first_name' => $newUser->firstName,
             'last_name' => $newUser->lastName,
             'surname' => $newUser->surname,
@@ -34,9 +34,9 @@ class UserServiceImpl implements UserService {
             'password_hash' => Hash::make($password),
             'date_of_birth' => $newUser->dateOfBirth,
             'rating' => 0.0
-        ]);
+        ])->id;
 
-        return Result::fromOk(true);
+        return Result::fromOk($id);
     }
 
     public function getById(int $id): Result {
