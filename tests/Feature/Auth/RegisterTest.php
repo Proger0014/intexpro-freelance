@@ -8,6 +8,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Tests\Utils\RoleUtils;
 use Tests\Utils\UserUtils;
 
 class RegisterTest extends TestCase
@@ -82,6 +83,7 @@ class RegisterTest extends TestCase
     public function register_customerUser_shouldReturnStatus204(): void {
         // Arrange
         $customer = UserUtils::getUserWithRole('customer');
+        $executorRoleId = RoleUtils::getRoleIdWithName('executor');
 
         $loginRequest = [
             'login' => $customer->login,
@@ -92,7 +94,7 @@ class RegisterTest extends TestCase
             'login' => 'new_user@new_user.new_user',
             'password' => 'password',
             'roles' => [
-                1
+                $executorRoleId
             ]
         ];
 
@@ -113,6 +115,7 @@ class RegisterTest extends TestCase
     public function register_customerUserDoubleSameUse_shouldReturnErrorExistsAndStatus400(): void {
         // Arrange
         $customer = UserUtils::getUserWithRole('customer');
+        $executorRoleId = RoleUtils::getRoleIdWithName('executor');
 
         $loginRequest = [
             'login' => $customer->login,
@@ -123,7 +126,7 @@ class RegisterTest extends TestCase
             'login' => 'new_user@new_user.new_user',
             'password' => 'password',
             'roles' => [
-                1
+                $executorRoleId
             ]
         ];
 
