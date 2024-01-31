@@ -21,7 +21,7 @@ class RegisterTest extends TestCase
     public function register_unauthenticatedUser_shouldReturnMessageUnauthenticatedAndStatus401(): void {
         // Arrange
         $registerRequest = [
-            'login' => 'login_login',
+            'login' => 'new_user@new',
             'password' => 'password_password'
         ];
 
@@ -53,7 +53,7 @@ class RegisterTest extends TestCase
          * если будет ошибка валидации, значит, нужно фиксить routes/api middleware на register
          */
         $registerRequest = [
-            'login' => 'login',
+            'login' => 'new_user@new',
             'password' => 'password',
             'roles' => [0]
         ];
@@ -91,7 +91,7 @@ class RegisterTest extends TestCase
         ];
 
         $registerRequest = [
-            'login' => 'new_user@new_user.new_user',
+            'login' => 'new_user@new',
             'password' => 'password',
             'roles' => [
                 $executorRoleId
@@ -123,7 +123,7 @@ class RegisterTest extends TestCase
         ];
 
         $registerRequest = [
-            'login' => 'new_user@new_user.new_user',
+            'login' => 'new_user@new',
             'password' => 'password',
             'roles' => [
                 $executorRoleId
@@ -149,6 +149,46 @@ class RegisterTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJson($expectedError);
+    }
+
+    /**
+     * @test
+     */
+    public function register_customerUserCreateAdminRole_shouldReturnErrorForbiddenAndStatus403(): void {
+        // Arrange
+        $customer = UserUtils::getUserWithRole('customer');
+        $adminRoleId = RoleUtils::getRoleIdWithName('admin');
+
+        $loginRequest = [
+            'login' => $customer->login,
+            'password' => 'password'
+        ];
+
+        $registerRequest = [
+            'login' => 'new_user@new',
+            'password' => 'password',
+            'roles' => [
+                $adminRoleId
+            ]
+        ];
+
+        $expectedError = [
+            'type' => '/errors/forbidden',
+            'title' => 'Недостаточно прав',
+            'status' => Response::HTTP_FORBIDDEN,
+            'detail' => 'Попробуйте обратиться к более вышестоящему для данного действия'
+        ];
+
+        $cookie = $this->postJson('/api/auth/login', $loginRequest)
+            ->getCookie(config('session.cookie'));
+
+        // Act
+        $response = $this->withCookie(config('session.cookie'), $cookie->getValue())
+            ->postJson('/api/auth/register', $registerRequest);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
         $response->assertJson($expectedError);
     }
 }
