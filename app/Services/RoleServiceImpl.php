@@ -9,7 +9,6 @@ use App\Dto\Role\RoleDto;
 use App\Utils\ResultError;
 use App\Abstractions\RoleService;
 use App\Abstractions\UserService;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\Role\RoleResource;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,7 +66,6 @@ class RoleServiceImpl implements RoleService
 
     public function attachUserToRole(int $userId, int $roleId): Result
     {
-        
         $existsUserResult = $this->userService->getById($userId);
         
         if ($existsUserResult->isError()) {
