@@ -22,5 +22,5 @@ Route::controller(CsrfCookieController::class)->group(function() {
 Route::controller(AuthController::class)->prefix('/auth')->group(function () {
     Route::post('/login', 'login');
     Route::post('/logout', 'logout')->middleware('auth:api');
-    Route::post('/register', 'register')->middleware('auth:api')->middleware('permission:user.create,role.assign-to-user.*');
+    Route::post('/register', 'register')->middleware('auth:api')->middleware('permission:user.create|role.assign-to-user.*');
 });
