@@ -2,15 +2,18 @@
 
 namespace App\Services;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Utils\Result;
+use App\Dto\Role\RoleDto;
+use App\Utils\ResultError;
 use App\Abstractions\RoleService;
 use App\Abstractions\UserService;
-use App\Dto\Role\RoleDto;
-use App\Http\Resources\Role\RoleCollectionResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\Role\RoleResource;
-use App\Models\Role;
-use App\Utils\Result;
-use App\Utils\ResultError;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\Role\RoleCollectionResource;
 
 class RoleServiceImpl implements RoleService
 {
@@ -64,19 +67,31 @@ class RoleServiceImpl implements RoleService
 
     public function attachUserToRole(int $userId, int $roleId): Result
     {
+        
         $existsUserResult = $this->userService->getById($userId);
-
+        
         if ($existsUserResult->isError()) {
             return Result::fromError($existsUserResult->getError());
         }
-
+        
         $existsRoleResult = $this->getById($roleId);
-
+        
         if ($existsRoleResult->isError()) {
             return Result::fromError($existsRoleResult->getError());
         }
+        
+        $existsRole = Role::whereId($roleId)->first();
 
-        Role::whereId($roleId)->first()->users()->attach($userId);
+        if (!Gate::allows('attachUserToRole', $existsRole)) {
+            return Result::fromError(new ResultError(
+                type: '/errors/forbidden',
+                title: 'Недостаточно прав',
+                status: Response::HTTP_FORBIDDEN,
+                detail: 'Попробуйте обратиться к более вышестоящему для данного действия'
+            ));
+        }
+
+        User::whereId($userId)->first()->assignRole($existsRole->name);
 
         return Result::fromOk(true);
     }
