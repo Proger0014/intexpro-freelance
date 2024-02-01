@@ -117,10 +117,10 @@ class UserServiceImpl implements UserService {
 
         if (! $existsUser) {
             return Result::fromError(new ResultError(
-                type: '/errors/not-found',
-                title: 'Юзера с таким логином не существует',
+                type: UsersErrorConstants::TYPE_NOT_FOUND,
+                title: UsersErrorConstants::TITLE_NOT_FOUND_BY_LOGIN,
                 status: Response::HTTP_NOT_FOUND,
-                detail: 'Попробуйте указать верные параметры или создать нового юзера'
+                detail: UsersErrorConstants::DETAIL_NOT_FOUND_BY_LOGIN
             ));
         }
 
