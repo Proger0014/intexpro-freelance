@@ -11,6 +11,8 @@ use App\Abstractions\RoleService;
 use App\Abstractions\UserService;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\Role\RoleResource;
+use App\Constants\Errors\RolesErrorConstants;
+use App\Constants\Errors\CommonErrorConstants;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Role\RoleCollectionResource;
 
@@ -52,10 +54,10 @@ class RoleServiceImpl implements RoleService
 
         if (! $existsRole) {
             return Result::fromError(new ResultError(
-                type: '/error/not-found',
-                title: 'Роль с таким id не найдена',
+                type: CommonErrorConstants::TYPE_NOT_FOUND,
+                title: RolesErrorConstants::TITLE_EXISTS,
                 status: Response::HTTP_NOT_FOUND,
-                detail: 'Попробуйте изменить параметры'
+                detail: CommonErrorConstants::DETAIL_NOT_FOUND
             ));
         }
 
