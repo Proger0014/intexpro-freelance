@@ -2,17 +2,18 @@
 
 namespace App\Services;
 
-use App\Http\Resources\User\UserResource;
 use App\Models\User;
-use App\Abstractions\UserService;
-use App\Dto\User\UserDto;
-use App\Http\Resources\User\UserCollectionResource;
-use App\Http\Resources\User\UserRolesResource;
 use App\Utils\Result;
+use App\Dto\User\UserDto;
 use App\Utils\ResultError;
+use App\Abstractions\UserService;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\User\UserResource;
 use App\Constants\Errors\UsersErrorConstants;
+use App\Constants\Errors\CommonErrorConstants;
+use App\Http\Resources\User\UserRolesResource;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\User\UserCollectionResource;
 
 class UserServiceImpl implements UserService {
     public function addNewUser(UserDto $newUser, string $password): Result {
@@ -45,10 +46,10 @@ class UserServiceImpl implements UserService {
 
         if (! $user) {
             return Result::fromError(new ResultError(
-                type: UsersErrorConstants::TYPE_NOT_FOUND,
+                type: CommonErrorConstants::TYPE_NOT_FOUND,
                 title: UsersErrorConstants::TITLE_NOT_FOUND_BY_ID,
                 status: Response::HTTP_NOT_FOUND,
-                detail: UsersErrorConstants::DETAIL_NOT_FOUND
+                detail: CommonErrorConstants::DETAIL_NOT_FOUND
             ));
         }
 
@@ -117,7 +118,7 @@ class UserServiceImpl implements UserService {
 
         if (! $existsUser) {
             return Result::fromError(new ResultError(
-                type: UsersErrorConstants::TYPE_NOT_FOUND,
+                type: CommonErrorConstants::TYPE_NOT_FOUND,
                 title: UsersErrorConstants::TITLE_NOT_FOUND_BY_LOGIN,
                 status: Response::HTTP_NOT_FOUND,
                 detail: UsersErrorConstants::DETAIL_NOT_FOUND_BY_LOGIN
