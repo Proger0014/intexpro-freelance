@@ -5,6 +5,9 @@ namespace App\Constants\Errors;
 class CommonErrorConstants
 {
     public const TYPE = '/errors';
+
+    public const TYPE_NOT_FOUND = CommonErrorConstants::TYPE . '/not-found';
+    public const DETAIL_NOT_FOUND = 'Попробуйте использовать верные параметры';
     
     public const TYPE_INTERNAL_SERVER = CommonErrorConstants::TYPE . '/internal-server-error';
     public const TITLE_INTERNAL_SERVER = 'Неизвестная ошибка';
