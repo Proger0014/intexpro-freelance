@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'surname' => fake()->name(),
-            'login' => fake()->unique()->userName(),
+            'login' => fake()->unique()->email(),
             'password_hash' => static::$password ??= Hash::make('password'),
             'date_of_birth' => fake()->date(max: '2016-01-01'),
             'rating' => fake()->randomFloat(2, 0, 5)

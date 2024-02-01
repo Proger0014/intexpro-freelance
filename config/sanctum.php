@@ -3,6 +3,10 @@
 use Laravel\Sanctum\Sanctum;
 
 return [
+    /**
+     * for override default /sanctum/csrf-cookie path set false
+     */
+    'routes' => false,
 
     /*
     |--------------------------------------------------------------------------

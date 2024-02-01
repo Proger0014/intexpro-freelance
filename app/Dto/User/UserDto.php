@@ -3,6 +3,7 @@
 namespace App\Dto\User;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 
 final class UserDto {
     public function __construct(
@@ -12,6 +13,8 @@ final class UserDto {
         public readonly ?string $surname,
         public readonly ?string $login,
         public readonly ?DateTimeImmutable $dateOfBirth,
-        public readonly ?float $rating
+        public readonly ?float $rating,
+        public readonly ?DateTimeImmutable $createdAt,
+        public readonly ?DateTimeInterface $updatedAt
     ) { }
 }

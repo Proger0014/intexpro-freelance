@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     public const DEFAULT_MIN_LENGTH = 8;
     public const DEFAULT_MAX_LENGTH = 255;
@@ -53,11 +53,5 @@ class User extends Authenticatable
     public function getAuthIdentifier()
     {
         return $this->login;
-    }
-
-    public function roles(): BelongsToMany {
-        return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id')
-            ->withPivot('created_at')
-            ->using(UserRolePivot::class);
     }
 }
