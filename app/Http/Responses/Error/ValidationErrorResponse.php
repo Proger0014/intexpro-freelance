@@ -24,5 +24,7 @@ final class ValidationErrorResponse {
     ) {
         $this->type = ValidationErrorConstants::TYPE;
         $this->title = ValidationErrorConstants::TITLE;
+        $this->status = $status;
+        $this->errors = $errors;
     }
 }
