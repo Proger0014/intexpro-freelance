@@ -12,6 +12,7 @@ use App\Utils\Result;
 use App\Utils\ResultError;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
+use App\Constants\Errors\UsersErrorConstants;
 
 class UserServiceImpl implements UserService {
     public function addNewUser(UserDto $newUser, string $password): Result {
@@ -19,10 +20,10 @@ class UserServiceImpl implements UserService {
 
         if ($existsUserResult->isSuccess()) {
             return Result::fromError(new ResultError(
-                type: '/errors/exists',
-                title: 'Юзер с таким логином уже существует',
+                type: UsersErrorConstants::TYPE_EXISTS,
+                title: UsersErrorConstants::TITLE_EXISTS,
                 status: Response::HTTP_BAD_REQUEST,
-                detail: 'Попробуйте изменить логин или войти в существующий аккаунт'
+                detail: UsersErrorConstants::DETAIL_EXISTS
             ));
         }
 
