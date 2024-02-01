@@ -25,8 +25,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login' => "required|min:{${User::DEFAULT_MIN_LENGTH}}|max:{${User::DEFAULT_MAX_LENGTH}}",
-            'password' => "required|min:{${User::DEFAULT_MIN_LENGTH}}|max:{${User::DEFAULT_MAX_LENGTH}}"
+            'login' => 'required|min:' . User::DEFAULT_MIN_LENGTH . '|max:' . User::DEFAULT_MAX_LENGTH,
+            'password' => 'required|min:' . User::DEFAULT_MIN_LENGTH . '|max:' . User::DEFAULT_MAX_LENGTH
         ];
     }
 
