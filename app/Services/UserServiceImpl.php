@@ -45,10 +45,10 @@ class UserServiceImpl implements UserService {
 
         if (! $user) {
             return Result::fromError(new ResultError(
-                type: '/errors/not-found',
-                title: 'Юзер с таким id не найден',
+                type: UsersErrorConstants::TYPE_NOT_FOUND,
+                title: UsersErrorConstants::TITLE_NOT_FOUND_BY_ID,
                 status: Response::HTTP_NOT_FOUND,
-                detail: 'Попробуйте использовать верные параметры'
+                detail: UsersErrorConstants::DETAIL_NOT_FOUND
             ));
         }
 
