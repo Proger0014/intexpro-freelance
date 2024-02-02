@@ -2,14 +2,15 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
-use Illuminate\Testing\TestResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Tests\Utils\RoleUtils;
 use Tests\Utils\UserUtils;
+use Illuminate\Testing\TestResponse;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\Fluent\AssertableJson;
+use App\Constants\Errors\CommonErrorConstants;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
@@ -174,10 +175,10 @@ class RegisterTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => '/errors/forbidden',
-            'title' => 'Недостаточно прав',
+            'type' => CommonErrorConstants::TYPE_FORBIDDEN,
+            'title' => CommonErrorConstants::TITLE_FORBIDDEN,
             'status' => Response::HTTP_FORBIDDEN,
-            'detail' => 'Попробуйте обратиться к более вышестоящему для данного действия'
+            'detail' => CommonErrorConstants::DETAIL_FORBIDDEN
         ];
 
         $cookie = $this->postJson('/api/auth/login', $loginRequest)
