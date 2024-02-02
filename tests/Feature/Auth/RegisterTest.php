@@ -7,6 +7,7 @@ use Tests\Utils\RoleUtils;
 use Tests\Utils\UserUtils;
 use Illuminate\Testing\TestResponse;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Constants\Errors\UsersErrorConstants;
 use Illuminate\Testing\Fluent\AssertableJson;
 use App\Constants\Errors\CommonErrorConstants;
 use Symfony\Component\HttpFoundation\Response;
@@ -132,10 +133,10 @@ class RegisterTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => '/errors/exists',
-            'title' => 'Юзер с таким логином уже существует',
+            'type' => UsersErrorConstants::TYPE_EXISTS,
+            'title' => UsersErrorConstants::TITLE_EXISTS,
             'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => 'Попробуйте изменить логин или войти в существующий аккаунт'
+            'detail' => UsersErrorConstants::DETAIL_EXISTS
         ];
 
         $cookie = $this->postJson('/api/auth/login', $loginRequest)
