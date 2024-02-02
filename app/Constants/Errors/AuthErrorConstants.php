@@ -8,4 +8,5 @@ class AuthErrorConstants
 {
     public const TYPE = CommonErrorConstants::TYPE . '/invalid-login-or-password';
     public const TITLE = 'Неверный логин или пароль';
+    public const DETAIL = 'Попробуйте изменить параметры';
 }
