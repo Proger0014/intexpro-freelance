@@ -89,10 +89,10 @@ class RoleServiceImpl implements RoleService
 
             if (!Gate::allows('attachUserToRole', $existsRole)) {
                 return Result::fromError(new ResultError(
-                    type: '/errors/forbidden',
-                    title: 'Недостаточно прав',
+                    type: CommonErrorConstants::TYPE_FORBIDDEN,
+                    title: CommonErrorConstants::TITLE_FORBIDDEN,
                     status: Response::HTTP_FORBIDDEN,
-                    detail: 'Попробуйте обратиться к более вышестоящему для данного действия'
+                    detail: CommonErrorConstants::DETAIL_FORBIDDEN
                 ));
             }
 
