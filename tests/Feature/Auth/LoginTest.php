@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Utils\UserUtils;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\TestCase;
-use Tests\Utils\UserUtils;
+use App\Constants\Errors\ValidationErrorConstants;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
 {
@@ -44,8 +45,8 @@ class LoginTest extends TestCase
         ];
 
         $expectedValidationErrorResponseWithoutErrorsField = [
-            'type' => '/errors/validation',
-            'title' => 'Ошибка валидации',
+            'type' => ValidationErrorConstants::TYPE,
+            'title' => ValidationErrorConstants::TITLE,
             'status' => Response::HTTP_BAD_REQUEST
         ];
 
