@@ -12,6 +12,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    public const DEFAULT_MIN_LENGTH = 8;
+    public const DEFAULT_MAX_LENGTH = 255;
+
     /**
      * The attributes that are mass assignable.
      *
