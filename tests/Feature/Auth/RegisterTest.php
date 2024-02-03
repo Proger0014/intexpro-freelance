@@ -2,14 +2,16 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
-use Illuminate\Testing\TestResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Tests\Utils\RoleUtils;
 use Tests\Utils\UserUtils;
+use Illuminate\Testing\TestResponse;
+use Illuminate\Foundation\Testing\WithFaker;
+use App\Constants\Errors\UsersErrorConstants;
+use Illuminate\Testing\Fluent\AssertableJson;
+use App\Constants\Errors\CommonErrorConstants;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
@@ -131,10 +133,10 @@ class RegisterTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => '/errors/exists',
-            'title' => 'Юзер с таким логином уже существует',
+            'type' => UsersErrorConstants::TYPE_EXISTS,
+            'title' => UsersErrorConstants::TITLE_EXISTS,
             'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => 'Попробуйте изменить логин или войти в существующий аккаунт'
+            'detail' => UsersErrorConstants::DETAIL_EXISTS
         ];
 
         $cookie = $this->postJson('/api/auth/login', $loginRequest)
@@ -174,10 +176,10 @@ class RegisterTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => '/errors/forbidden',
-            'title' => 'Недостаточно прав',
+            'type' => CommonErrorConstants::TYPE_FORBIDDEN,
+            'title' => CommonErrorConstants::TITLE_FORBIDDEN,
             'status' => Response::HTTP_FORBIDDEN,
-            'detail' => 'Попробуйте обратиться к более вышестоящему для данного действия'
+            'detail' => CommonErrorConstants::DETAIL_FORBIDDEN
         ];
 
         $cookie = $this->postJson('/api/auth/login', $loginRequest)

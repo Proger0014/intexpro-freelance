@@ -3,6 +3,7 @@
 namespace App\Http\Responses\Error;
 
 use Symfony\Component\HttpFoundation\Response;
+use App\Constants\Errors\ValidationErrorConstants;
 
 final class ValidationErrorResponse {
     public readonly string $type;
@@ -21,8 +22,8 @@ final class ValidationErrorResponse {
         array $errors,
         int $status = Response::HTTP_BAD_REQUEST
     ) {
-        $this->type = '/errors/validation';
-        $this->title = 'Ошибка валидации';
+        $this->type = ValidationErrorConstants::TYPE;
+        $this->title = ValidationErrorConstants::TITLE;
         $this->status = $status;
         $this->errors = $errors;
     }

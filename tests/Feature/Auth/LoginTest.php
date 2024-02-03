@@ -2,12 +2,14 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Utils\UserUtils;
+use App\Constants\Errors\AuthErrorConstants;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\TestCase;
-use Tests\Utils\UserUtils;
+use App\Constants\Errors\ValidationErrorConstants;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
 {
@@ -44,8 +46,8 @@ class LoginTest extends TestCase
         ];
 
         $expectedValidationErrorResponseWithoutErrorsField = [
-            'type' => '/errors/validation',
-            'title' => 'Ошибка валидации',
+            'type' => ValidationErrorConstants::TYPE,
+            'title' => ValidationErrorConstants::TITLE,
             'status' => Response::HTTP_BAD_REQUEST
         ];
 
@@ -82,10 +84,10 @@ class LoginTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => '/errors/invalid-login-or-password',
-            'title' => 'Неверный логин или пароль',
+            'type' => AuthErrorConstants::TYPE,
+            'title' => AuthErrorConstants::TITLE,
             'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => 'Попробуйте изменить параметры'
+            'detail' => AuthErrorConstants::DETAIL
         ];
 
         // Act

@@ -2,16 +2,18 @@
 
 namespace App\Services;
 
-use App\Http\Resources\User\UserResource;
 use App\Models\User;
-use App\Abstractions\UserService;
-use App\Dto\User\UserDto;
-use App\Http\Resources\User\UserCollectionResource;
-use App\Http\Resources\User\UserRolesResource;
 use App\Utils\Result;
+use App\Dto\User\UserDto;
 use App\Utils\ResultError;
+use App\Abstractions\UserService;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\User\UserResource;
+use App\Constants\Errors\UsersErrorConstants;
+use App\Constants\Errors\CommonErrorConstants;
+use App\Http\Resources\User\UserRolesResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\User\UserCollectionResource;
 
 class UserServiceImpl implements UserService {
     public function addNewUser(UserDto $newUser, string $password): Result {
@@ -19,10 +21,10 @@ class UserServiceImpl implements UserService {
 
         if ($existsUserResult->isSuccess()) {
             return Result::fromError(new ResultError(
-                type: '/errors/exists',
-                title: 'Юзер с таким логином уже существует',
+                type: UsersErrorConstants::TYPE_EXISTS,
+                title: UsersErrorConstants::TITLE_EXISTS,
                 status: Response::HTTP_BAD_REQUEST,
-                detail: 'Попробуйте изменить логин или войти в существующий аккаунт'
+                detail: UsersErrorConstants::DETAIL_EXISTS
             ));
         }
 
@@ -44,10 +46,10 @@ class UserServiceImpl implements UserService {
 
         if (! $user) {
             return Result::fromError(new ResultError(
-                type: '/errors/not-found',
-                title: 'Юзер с таким id не найден',
+                type: CommonErrorConstants::TYPE_NOT_FOUND,
+                title: UsersErrorConstants::TITLE_NOT_FOUND_BY_ID,
                 status: Response::HTTP_NOT_FOUND,
-                detail: 'Попробуйте использовать верные параметры'
+                detail: CommonErrorConstants::DETAIL_NOT_FOUND
             ));
         }
 
@@ -116,10 +118,10 @@ class UserServiceImpl implements UserService {
 
         if (! $existsUser) {
             return Result::fromError(new ResultError(
-                type: '/errors/not-found',
-                title: 'Юзера с таким логином не существует',
+                type: CommonErrorConstants::TYPE_NOT_FOUND,
+                title: UsersErrorConstants::TITLE_NOT_FOUND_BY_LOGIN,
                 status: Response::HTTP_NOT_FOUND,
-                detail: 'Попробуйте указать верные параметры или создать нового юзера'
+                detail: UsersErrorConstants::DETAIL_NOT_FOUND_BY_LOGIN
             ));
         }
 
