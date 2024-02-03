@@ -1,0 +1,1 @@
+export { default as HomePage, ROUTE as HOME_ROUTE } from "./HomePage";
