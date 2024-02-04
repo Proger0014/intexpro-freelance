@@ -1,0 +1,64 @@
+.dots {
+  position: relative;
+
+  &::before {
+    z-index: 0;
+    display: block;
+    content: '';
+
+    opacity: .5;
+    position: absolute;
+    height: 100px;
+    width: 60%;
+    margin-top: 250px;
+    right: 0;
+
+    background-image: url("src/assets/home/dots.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
+.cubes {
+  position: relative;
+}
+
+.cubes_1 {
+  &::after {
+    z-index: 0;
+    display: block;
+    content: '';
+  
+    opacity: .5;
+    position: absolute;
+    width: 60%;
+    height: 1200px;
+    margin-top: 350px;
+    left: 0;
+  
+    background-image: url("/src/assets/home/cubes_01.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
+.cubes_2 {
+  &::after {
+    z-index: 0;
+    display: block;
+    content: '';
+  
+    opacity: .2;
+    position: absolute;
+    width: 60%;
+    height: 1200px;
+    margin-top: 350px;
+    right: 0;
+  
+    transform: rotateY(180deg);
+
+    background-image: url("/src/assets/home/cubes_01.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}

@@ -1,0 +1,1 @@
+export { HomePage, HOME_ROUTE } from "./home";
