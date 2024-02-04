@@ -17,7 +17,9 @@ function HomeLayout({ main, banner }) {
         </Container>
       </div>
       <main>
-        {main}
+        <Container size="xl">
+          {main}
+        </Container>
       </main>
     </div>
   )
