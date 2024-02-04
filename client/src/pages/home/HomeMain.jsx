@@ -20,6 +20,7 @@ function Link({ logo, title }) {
 function HomeMain({ ...props }) {
   const homeLinks = HomeLinks.map((homeLink) => (
     <Link 
+      key={homeLink.logo}
       logo={homeLink.logo}
       title={homeLink.title} />
   ))

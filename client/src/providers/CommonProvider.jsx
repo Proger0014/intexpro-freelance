@@ -1,9 +1,11 @@
-import { RoutingProvider, ThemeProvider } from "./";
+import { RoutingProvider, StoreProvider, ThemeProvider } from "./";
 
 function CommonProvider() {
   return (
     <ThemeProvider>
-      <RoutingProvider />
+      <StoreProvider>
+        <RoutingProvider />
+      </StoreProvider>
     </ThemeProvider>
   )
 }
