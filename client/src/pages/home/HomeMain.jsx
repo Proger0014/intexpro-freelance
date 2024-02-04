@@ -1,19 +1,17 @@
-import { Group, Image, Stack, UnstyledButton, Text, ActionIcon } from "@mantine/core";
+import { Group, Image, Stack, Text, Button } from "@mantine/core";
 import HomeLinks from "./HomeLinks";
 
 function Link({ logo, title }) {
   return (
-    <UnstyledButton>
+    <Button bg="none" h={150}>
         <Stack align="center">
-        <ActionIcon h={90} w={90} bg="none">
           <Image
             h={90}
             w={90}
             src={logo} />
-        </ActionIcon>
-        <Text>{title}</Text>
+        <Text c="gray.9">{title}</Text>
       </Stack>
-    </UnstyledButton>
+    </Button>
   )
 }
 
