@@ -6,7 +6,7 @@ const ROUTE = "/";
 function HomePage() {
   return (
     <HomeLayout 
-      banner={<HomeBanner w="50%" />}
+      banner={<HomeBanner w="50%" pb="20%" />}
       main={<></>} />
   )
 }

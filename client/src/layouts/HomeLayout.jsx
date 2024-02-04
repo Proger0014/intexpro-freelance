@@ -9,7 +9,7 @@ function HomeLayout({ main, banner }) {
         <Header isTransparent py={29} h="20%" />
 
         <Container size="xl" h="80%" >
-          <Flex align="center" pb="15%" h="100%">
+          <Flex align="center" h="100%">
             <div className={sbanner.content}>
               {banner}
             </div>
