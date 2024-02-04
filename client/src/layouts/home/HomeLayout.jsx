@@ -1,6 +1,7 @@
-import { Header } from "../components/header";
-import { banner as sbanner } from "../assets/styles";
+import { Header } from "../../components/header";
+import { banner as sbanner } from "../../assets/styles";
 import { Container, Flex } from "@mantine/core";
+import c from "./home.module.scss";
 
 function HomeLayout({ main, banner }) {
   return (
@@ -16,7 +17,7 @@ function HomeLayout({ main, banner }) {
           </Flex>
         </Container>
       </div>
-      <main>
+      <main className={c.dots}>
         <Container size="xl">
           {main}
         </Container>
