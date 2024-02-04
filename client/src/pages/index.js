@@ -1,1 +1,1 @@
-export { default as HomePage, ROUTE as HOME_ROUTE } from "./HomePage";
+export { HomePage, HOME_ROUTE } from "./home";

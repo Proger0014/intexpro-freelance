@@ -1,0 +1,19 @@
+.banner {
+  position: relative;
+  height: 80vh;
+  &::before {
+    width: 100%;
+    height: inherit;
+    display: block;
+    content: '';
+    position: absolute;
+    background-image: url("../common/background.png");
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .content {
+    position: relative;
+    z-index: 25;
+  }
+}
