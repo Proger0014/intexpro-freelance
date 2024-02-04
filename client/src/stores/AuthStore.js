@@ -2,18 +2,24 @@ import { makeAutoObservable } from "mobx";
 import { authApi } from "../api";
 
 class AuthStore {
+  isAuthorized = false;
+
   login(login, password) {
-    authApi.login(login, password)
+    return authApi.login(login, password)
       .then(data => {
-        console.log(data.data);
+        this.isAuthorized = true;
+
+        return data;
       })
       .catch((error) => {
-        console.log(error);
+        return error.response.data;
       })
   }
 
   logout() {
+    authApi.logout();
 
+    this.isAuthorized = false;
   }
 
   constructor() {

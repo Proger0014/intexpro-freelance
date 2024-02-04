@@ -1,11 +1,14 @@
-import { RoutingProvider, StoreProvider, ThemeProvider } from "./";
+import { ModalsProvider, NotificationsProvider, RoutingProvider, StoreProvider, ThemeProvider } from "./";
 
 function CommonProvider() {
   return (
     <ThemeProvider>
-      <StoreProvider>
-        <RoutingProvider />
-      </StoreProvider>
+      <ModalsProvider>
+          <StoreProvider>
+            <NotificationsProvider />
+            <RoutingProvider />
+          </StoreProvider>
+      </ModalsProvider>
     </ThemeProvider>
   )
 }

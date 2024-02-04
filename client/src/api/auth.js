@@ -1,9 +1,9 @@
 import { api } from ".";
 
-function login({ login, password }) {
+function login(login, password) {
   return api.post("/auth/login", {
-    login: login,
-    password: password
+    'login': login,
+    'password': password
   });
 }
 
