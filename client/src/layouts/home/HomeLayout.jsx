@@ -2,6 +2,7 @@ import { Header } from "../../components/header";
 import { banner as sbanner } from "../../assets/styles";
 import { Container, Flex } from "@mantine/core";
 import c from "./home.module.scss";
+import cn from "classnames";
 
 function HomeLayout({ main, banner }) {
   return (
@@ -18,9 +19,13 @@ function HomeLayout({ main, banner }) {
         </Container>
       </div>
       <main className={c.dots}>
-        <Container size="xl">
-          {main}
-        </Container>
+        <div className={cn(c.cubes, c.cubes_1)}>
+          <div className={cn(c.cubes, c.cubes_2)}>
+            <Container size="xl">
+              {main}
+            </Container>
+          </div>
+        </div>
       </main>
     </div>
   )
