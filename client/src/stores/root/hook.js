@@ -1,13 +1,5 @@
 import { useContext } from "react";
-import { RootStoreContext } from "../providers/store";
-
-class RootStore {
-  authStore;
-
-  constructor({ authStore }) {
-    this.authStore = authStore;
-  }
-}
+import { RootStoreContext } from "../../providers/store";
 
 function useStores() {
   const context = useContext(RootStoreContext);
@@ -19,6 +11,4 @@ function useStores() {
   return context;
 }
 
-
-export default RootStore;
-export { useStores };
+export default useStores;

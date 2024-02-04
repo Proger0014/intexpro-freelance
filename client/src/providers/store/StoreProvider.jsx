@@ -16,5 +16,4 @@ function StoreProvider({ children }) {
 }
 
 export default StoreProvider;
-
 export { Context as RootStoreContext };
