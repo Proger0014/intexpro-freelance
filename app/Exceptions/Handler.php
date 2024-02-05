@@ -2,16 +2,18 @@
 
 namespace App\Exceptions;
 
-use App\Http\Responses\Error\HasValidationErrorResponse;
-use App\Http\Responses\Error\ValidationErrorResponse;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Responses\Error\ErrorResponse;
+use App\Constants\Errors\CommonErrorConstants;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use App\Http\Responses\Error\ValidationErrorResponse;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +50,14 @@ class Handler extends ExceptionHandler
             $validationErrorResponse = new ValidationErrorResponse($e->errors());
 
             return response()->json($validationErrorResponse, $validationErrorResponse->status);
+        }else if($e instanceof UnauthorizedException){
+            $response = new ErrorResponse(
+                type: CommonErrorConstants::TYPE_FORBIDDEN,
+                title: CommonErrorConstants::TITLE_FORBIDDEN,
+                status: Response::HTTP_FORBIDDEN,
+                detail: CommonErrorConstants::DETAIL_FORBIDDEN,
+            );
+            return response()->json($response, $response->status);
         }
 
         return parent::render($request, $e);
