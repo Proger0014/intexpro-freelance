@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Responses\Auth\LoginResponse;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Responses\Error\ErrorResponse;
 use App\Constants\Errors\AuthErrorConstants;
@@ -34,7 +35,11 @@ class AuthController extends Controller
 
         $loginRequest->session()->regenerate();
 
-        return response()->json(data: null, status: Response::HTTP_NO_CONTENT);
+        $response = new LoginResponse(
+            authenticatedUserId: Auth::user()->id
+        );
+
+        return response()->json($response, Response::HTTP_OK);
     }
 
     public function logout(): JsonResponse {
