@@ -9,13 +9,9 @@ use OpenApi\Attributes as OA;
 )]
 class LoginRequest
 {
-    #[OA\Property(
-        type: 'string',
-    )]
-    public $login;
+    #[OA\Property]
+    public string $login;
 
-    #[OA\Property(
-        type: 'string'
-    )]
-    public $password;
+    #[OA\Property]
+    public string $password;
 }
