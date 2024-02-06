@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Tests\Utils\RoleUtils;
 use Tests\Utils\UserUtils;
 use Illuminate\Testing\TestResponse;
+use App\Constants\Errors\AuthErrorConstants;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Constants\Errors\UsersErrorConstants;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -176,10 +177,10 @@ class RegisterTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => CommonErrorConstants::TYPE_FORBIDDEN,
-            'title' => CommonErrorConstants::TITLE_FORBIDDEN,
+            'type' => AuthErrorConstants::TYPE_FORBIDDEN,
+            'title' => AuthErrorConstants::TITLE_FORBIDDEN,
             'status' => Response::HTTP_FORBIDDEN,
-            'detail' => CommonErrorConstants::DETAIL_FORBIDDEN
+            'detail' => AuthErrorConstants::DETAIL_FORBIDDEN
         ];
 
         $cookie = $this->postJson('/api/auth/login', $loginRequest)
