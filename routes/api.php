@@ -27,5 +27,5 @@ Route::controller(AuthController::class)->prefix('/auth')->group(function () {
 });
 
 Route::controller(UserController::class)->prefix('/users')->group(function () {
-    Route::get('/{id}', 'getById')->middleware('auth')->middleware('permission:user.get.all|user.get.self');
+    Route::get('/{id}', 'getById')->middleware('auth')->middleware('permission:user.read');
 });
