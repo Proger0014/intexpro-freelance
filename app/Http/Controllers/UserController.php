@@ -21,4 +21,15 @@ class UserController extends Controller {
 
         return response()->json($userResult->getData(), Response::HTTP_OK);
     }
+
+    public function getRolesByUserId(int $userId): JsonResponse {
+        $rolesResult = $this->userService->getRolesOfUser($userId);
+
+        if ($rolesResult->isError()) {
+            $error = $rolesResult->getError();
+            return response()->json($error, $error->status);
+        }
+
+        return response()->json($rolesResult->getData(), Response::HTTP_OK);
+    }
 }
