@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Abstractions\OrderCategoryService;
+use App\Abstractions\OrderService;
 use App\Abstractions\RoleService;
 use App\Abstractions\UserService;
 use App\Http\Auth\Gates\GatesRegister;
 use App\Services\OrderCategoryServiceImpl;
+use App\Services\OrderServiceImpl;
 use App\Services\RoleServiceImpl;
 use App\Services\UserServiceImpl;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(UserService::class, UserServiceImpl::class);
         $this->app->singleton(RoleService::class, RoleServiceImpl::class);
         $this->app->singleton(OrderCategoryService::class, OrderCategoryServiceImpl::class);
+        $this->app->singleton(OrderService::class, OrderServiceImpl::class);
     }
 
     /**
