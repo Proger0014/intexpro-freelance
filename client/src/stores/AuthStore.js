@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import { authApi } from "../api";
+import { authApi, usersApi } from "../api";
+import { fromPromise } from "mobx-utils";
 
 class AuthStore {
   authenticatedUser = undefined;
@@ -10,6 +11,16 @@ class AuthStore {
       .then(data => {
         if (data.status == 200) {
           this.isAuthorized = true;
+
+          const authenticatedUserPromise = usersApi.getById(data.data.authenticatedUserId)
+            .then(userRes => {
+              return usersApi.getRolesByUserId(data.data.authenticatedUserId)
+                .then(rolesRes => {
+                  return { ...userRes.data, ...{ "roles": rolesRes.data.roles } }
+                })
+            });
+
+          this.authenticatedUser = fromPromise(authenticatedUserPromise);
         }
 
         return data;
@@ -27,10 +38,6 @@ class AuthStore {
       }
     });
 
-  }
-
-  setAuthenticatedUser(authenticatedUser) {
-    this.authenticatedUser = authenticatedUser;
   }
 
   constructor() {

@@ -5,7 +5,7 @@ function getById(id) {
 }
 
 function getRolesByUserId(userId) {
-  return api.get(`/users/{${userId}}/roles`);
+  return api.get(`/users/${userId}/roles`);
 }
 
 export { getById, getRolesByUserId };

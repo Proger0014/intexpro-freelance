@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { IconSettings, IconLogout } from "@tabler/icons-react";
 import c from "./menu.module.scss";
 import { useEffect, useState } from "react";
+import { rolesUtils } from "../../../../utils";
 
 function handleLogout(authStore) {
     authStore.logout();
@@ -12,6 +13,7 @@ function handleLogout(authStore) {
 
 function Menu() {
     const [userName, setUserName] = useState("");
+    const [roles, setRoles] = useState(undefined);
 
     const { authStore } = useStores();
 
@@ -19,9 +21,14 @@ function Menu() {
       authStore.authenticatedUser.case({
         fulfilled: (value) => {
           setUserName(`${value.firstName} ${value.lastName}`);
+          setRoles(value.roles);
         }
       });
     }, [authStore.authenticatedUser.state]);
+    
+    const rolesBlocks = roles?.map(role => (
+      <Text key={role.id}>{rolesUtils.translateRole(role.name)}</Text>
+    ));
 
     return (
         <MantineMenu position="bottom-end" classNames={c.menu}>
@@ -29,9 +36,12 @@ function Menu() {
                 <Button bg="gray.6">Меню</Button>
             </MantineMenu.Target>
 
-            <MantineMenu.Dropdown className={c.dropdowns}>
+            <MantineMenu.Dropdown className={c.dropdowns} w={250}>
                 <Box p={5}>
-                    <Text>{userName}</Text>
+                    <Text fz="xl" ta="center">{userName}</Text>
+
+                    Роли
+                    {rolesBlocks}
                 </Box>
 
                 <MantineMenu.Divider />

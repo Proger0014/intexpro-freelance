@@ -24,7 +24,7 @@ class UserRolesResource extends JsonResource
         $userId = $this->id;
 
         return [
-            'user_id' => $this->id,
+            'userId' => $this->id,
             'roles' => UserRoleResource::collection($this->roles()->get())
                 ->additional(['user_id' => $this->id])
         ];
