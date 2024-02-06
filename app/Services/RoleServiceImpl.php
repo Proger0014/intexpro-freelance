@@ -11,6 +11,7 @@ use App\Abstractions\RoleService;
 use App\Abstractions\UserService;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\Role\RoleResource;
+use App\Constants\Errors\AuthErrorConstants;
 use App\Constants\Errors\RolesErrorConstants;
 use App\Constants\Errors\CommonErrorConstants;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,10 +90,10 @@ class RoleServiceImpl implements RoleService
 
             if (!Gate::allows('attachUserToRole', $existsRole)) {
                 return Result::fromError(new ResultError(
-                    type: CommonErrorConstants::TYPE_FORBIDDEN,
-                    title: CommonErrorConstants::TITLE_FORBIDDEN,
+                    type: AuthErrorConstants::TYPE_FORBIDDEN,
+                    title: AuthErrorConstants::TITLE_FORBIDDEN,
                     status: Response::HTTP_FORBIDDEN,
-                    detail: CommonErrorConstants::DETAIL_FORBIDDEN
+                    detail: AuthErrorConstants::DETAIL_FORBIDDEN
                 ));
             }
 
