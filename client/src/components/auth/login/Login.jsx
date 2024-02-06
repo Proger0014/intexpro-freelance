@@ -3,10 +3,11 @@ import { useForm } from "@mantine/form";
 import { useStores } from "../../../stores";
 import { notifications } from "@mantine/notifications";
 import { usersApi } from "../../../api";
+import { fromPromise } from "mobx-utils";
 
 
 const handleSubmit = (authStore, value, close, formSetErrors) => {
-  authStore.login(value.login, value.password)
+  const response = authStore.login(value.login, value.password)
     .then(res => {
       if (res.status >= 400) {
         if (res.type == "/errors/invalid-login-or-password") {
@@ -15,14 +16,16 @@ const handleSubmit = (authStore, value, close, formSetErrors) => {
       } else if (res.status >= 200) {
         notifications.show({ title: "Успешно", message: "Вы успешно вошли", color: "green" });
 
-        usersApi.getById(res.data.authenticatedUserId)
-          .then(res => {
-            authStore.authenticatedUser = res.data;
-          })
-
         close();
-      }
+
+        return usersApi.getById(res.data.authenticatedUserId)
+          .then(res => res.data);
+        }
     });
+
+    const authUserPromise = fromPromise(response);
+          
+    authStore.setAuthenticatedUser(authUserPromise);
 };
 
 function Login({ opened, close }) {

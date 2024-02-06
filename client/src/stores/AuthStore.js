@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { authApi } from "../api";
 
 class AuthStore {
-  authenticatedUser;
+  authenticatedUser = undefined;
   isAuthorized = false;
 
   login(login, password) {
@@ -10,7 +10,6 @@ class AuthStore {
       .then(data => {
         if (data.status == 200) {
           this.isAuthorized = true;
-          
         }
 
         return data;
@@ -23,10 +22,15 @@ class AuthStore {
   logout() {
     authApi.logout().then(res => {
       if (res.status < 300) {
+        this.authenticatedUser = undefined;
         this.isAuthorized = false;
       }
     });
 
+  }
+
+  setAuthenticatedUser(authenticatedUser) {
+    this.authenticatedUser = authenticatedUser;
   }
 
   constructor() {
