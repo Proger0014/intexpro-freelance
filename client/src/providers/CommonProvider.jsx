@@ -2,14 +2,14 @@ import { ModalsProvider, NotificationsProvider, RoutingProvider, StoreProvider, 
 
 function CommonProvider() {
   return (
-    <ThemeProvider>
-      <ModalsProvider>
-          <StoreProvider>
-            <NotificationsProvider />
-            <RoutingProvider />
-          </StoreProvider>
-      </ModalsProvider>
-    </ThemeProvider>
+    <StoreProvider>
+      <ThemeProvider>
+        <ModalsProvider>
+          <NotificationsProvider />
+          <RoutingProvider />
+        </ModalsProvider>
+      </ThemeProvider>
+    </StoreProvider>
   )
 }
 

@@ -17,9 +17,12 @@ class AuthStore {
   }
 
   logout() {
-    authApi.logout();
+    authApi.logout().then(res => {
+      if (res.status < 300) {
+        this.isAuthorized = false;
+      }
+    });
 
-    this.isAuthorized = false;
   }
 
   constructor() {
