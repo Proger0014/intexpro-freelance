@@ -7,7 +7,9 @@ class AuthStore {
   login(login, password) {
     return authApi.login(login, password)
       .then(data => {
-        this.isAuthorized = true;
+        if (data.status == 200) {
+          this.isAuthorized = true;
+        }
 
         return data;
       })
