@@ -27,11 +27,16 @@ class LoginTest extends TestCase
             'password' => 'password'
         ];
 
+        $expectedResponse = [
+            'authenticatedUserId' => $user->id
+        ];
+
         // Act
         $response = $this->postJson('/api/auth/login', $loginRequest);
 
         // Assert
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson($expectedResponse);
         $response->assertCookie(config('session.cookie'));
     }
 

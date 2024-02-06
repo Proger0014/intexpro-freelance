@@ -4,6 +4,7 @@ namespace Swagger\Controllers;
 
 use OpenApi\Attributes as OA;
 use Swagger\Schemas\Auth\LoginRequest;
+use Swagger\Schemas\Auth\LoginResponse;
 use Swagger\Schemas\Auth\RegisterRequest;
 use Swagger\Schemas\Error\ErrorResponse;
 use Swagger\Schemas\Error\ValidationErrorResponse;
@@ -20,7 +21,12 @@ interface AuthController {
         summary: 'Вход в систему',
         tags: [AUTH_TAG]
     )]
-    #[OA\Response(response: Response::HTTP_NO_CONTENT, description: 'Успешно')]
+    #[OA\Response(
+        response: Response::HTTP_OK, 
+        description: 'Успешно', 
+        content: new OA\JsonContent(
+            ref: LoginResponse::class
+        ))]
     #[OA\Response(
         response: Response::HTTP_BAD_REQUEST,
         description: 'Ошибка',
