@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Abstractions\OrderCategoryService;
 use App\Constants\Errors\CommonErrorConstants;
-use App\Http\Resources\Order\CategoryCollectionResource;
-use App\Http\Resources\Order\CategoryResource;
+use App\Http\Resources\Order\OrderCategoryCollectionResource;
+use App\Http\Resources\Order\OrderCategoryResource;
 use App\Models\OrdersCategory;
 use App\Utils\Result;
 use App\Utils\ResultError;
@@ -26,11 +26,11 @@ class OrderCategoryServiceImpl implements OrderCategoryService
             ));
         }
 
-        return Result::fromOk(new CategoryResource($existsCategory));
+        return Result::fromOk(new OrderCategoryResource($existsCategory));
     }
 
     function getAll(): Result
     {
-        return Result::fromOk(new CategoryCollectionResource(OrdersCategory::all()));
+        return Result::fromOk(new OrderCategoryCollectionResource(OrdersCategory::all()));
     }
 }

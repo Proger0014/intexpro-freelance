@@ -2,26 +2,26 @@
 
 namespace App\Http\Resources\Order;
 
-use App\Models\OrdersCategory;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
- * @mixin Collection<int, OrdersCategory>
+ * @mixin Collection<int, Order>
  */
-class CategoryCollectionResource extends ResourceCollection
+class OrderCollectionResource extends ResourceCollection
 {
     /**
-     * Transform the resource into an array.
+     * Transform the resource collection into an array.
      *
-     * @return array<string, mixed>
+     * @return array<int|string, mixed>
      */
     public function toArray(Request $request): array
     {
         return [
             'count' => $this->collection->count(),
-            'data' => CategoryResource::collection($this->collection)
+            'data' => OrderResource::collection($this->collection)
         ];
     }
 }

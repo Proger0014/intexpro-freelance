@@ -2,8 +2,8 @@
 
 namespace App\Abstractions;
 
-use App\Http\Resources\Order\CategoryCollectionResource;
-use App\Http\Resources\Order\CategoryResource;
+use App\Http\Resources\Order\OrderCategoryCollectionResource;
+use App\Http\Resources\Order\OrderCategoryResource;
 use App\Utils\Result;
 
 interface OrderCategoryService
@@ -11,12 +11,12 @@ interface OrderCategoryService
     /**
      * @param int $id
      *
-     * @return Result<CategoryResource|null>
+     * @return Result<OrderCategoryResource|null>
      */
     function getById(int $id): Result;
 
     /**
-     * @return Result<CategoryCollectionResource|null>
+     * @return Result<OrderCategoryCollectionResource|null>
      */
     function getAll(): Result;
 }

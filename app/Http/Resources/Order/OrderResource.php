@@ -2,14 +2,14 @@
 
 namespace App\Http\Resources\Order;
 
-use App\Models\OrdersCategory;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin OrdersCategory
+ * @mixin Order
  */
-class CategoryResource extends JsonResource
+class OrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,9 +20,14 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'title' => $this->title,
+            'description' => $this->description,
+            'userId' => $this->user_id,
+            'categoryId' => $this->category_id,
             'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at
+            'updatedAt' => $this->updated_at,
+            'expiresAt' => $this->expires_at,
+            'resultIsLink' => $this->result_is_link
         ];
     }
 }
