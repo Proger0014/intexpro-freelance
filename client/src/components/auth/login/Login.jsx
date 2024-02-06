@@ -17,7 +17,6 @@ const handleSubmit = (authStore, value, close, formSetErrors) => {
 
         usersApi.getById(res.data.authenticatedUserId)
           .then(res => {
-            console.log(res);
             authStore.authenticatedUser = res.data;
           })
 
