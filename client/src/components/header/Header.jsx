@@ -1,7 +1,7 @@
 import { Box, Grid, Group, Image } from "@mantine/core";
 import { Link } from "react-router-dom";
 import c from "./header.module.scss";
-import HeaderButtons from "./HeaderButtons";
+import { Buttons } from "./buttons";
 import HeaderSearch from "./HeaderSearch";
 
 function Header({ children, isTransparent = false, ...props }) {
@@ -26,7 +26,7 @@ function Header({ children, isTransparent = false, ...props }) {
         </Grid.Col>
         <Grid.Col span={2} >
           <Group justify="end">
-            <HeaderButtons />
+            <Buttons />
           </Group>
         </Grid.Col>
       </Grid>

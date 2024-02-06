@@ -24,12 +24,9 @@ class User extends Authenticatable
         'id', 'created_at'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [];
+    protected $fillable = [
+        'id', 'first_name', 'last_name', 'surname', 'login', 'date_of_birth', 'rating', 'created_at', 'updated_at'
+    ];
 
     /**
      * The attributes that should be cast.

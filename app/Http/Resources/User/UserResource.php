@@ -9,14 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * 
+ *
  * @mixin User
  */
 class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     * 
+     *
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
@@ -29,8 +29,8 @@ class UserResource extends JsonResource
             'login' => $this->login,
             'dateOfBirth' => $this->date_of_birth,
             'rating' => $this->rating,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at
         ];
     }
 
