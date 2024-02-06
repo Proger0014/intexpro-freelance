@@ -6,7 +6,7 @@ use Throwable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Responses\Error\ErrorResponse;
-use App\Constants\Errors\CommonErrorConstants;
+use App\Constants\Errors\AuthErrorConstants;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Foundation\Application;
@@ -52,10 +52,10 @@ class Handler extends ExceptionHandler
             return response()->json($validationErrorResponse, $validationErrorResponse->status);
         }else if($e instanceof UnauthorizedException){
             $response = new ErrorResponse(
-                type: CommonErrorConstants::TYPE_FORBIDDEN,
-                title: CommonErrorConstants::TITLE_FORBIDDEN,
+                type: AuthErrorConstants::TYPE_FORBIDDEN,
+                title: AuthErrorConstants::TITLE_FORBIDDEN,
                 status: Response::HTTP_FORBIDDEN,
-                detail: CommonErrorConstants::DETAIL_FORBIDDEN,
+                detail: AuthErrorConstants::DETAIL_FORBIDDEN,
             );
             return response()->json($response, $response->status);
         }
