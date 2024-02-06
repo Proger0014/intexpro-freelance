@@ -10,6 +10,10 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'id', 'created_at', 'user_id'
+    ];
+
     /**
      * @return HasOne<OrdersCategory>
      */

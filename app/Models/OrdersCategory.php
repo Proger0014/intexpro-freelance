@@ -12,6 +12,10 @@ class OrdersCategory extends Model
 
     protected $table = 'orders_categories';
 
+    protected $guarded = [
+        'id', 'created_at'
+    ];
+
     /**
      * @return HasMany<Order>
      */

@@ -12,6 +12,10 @@ class OrdersRequest extends Model
 
     protected $table = 'orders_requests';
 
+    protected $guarded = [
+        'id', 'created_at, user_id, order_id'
+    ];
+
     /**
      * @return HasOne<User>
      */
