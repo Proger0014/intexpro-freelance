@@ -26,10 +26,10 @@ class AuthController extends Controller
     public function login(LoginRequest $loginRequest): JsonResponse {
         if (!Auth::attempt($loginRequest->only(['login', 'password']))) {
             return response()->json(new ErrorResponse(
-                type:  AuthErrorConstants::TYPE,
-                title: AuthErrorConstants::TITLE,
+                type:  AuthErrorConstants::TYPE_INVALID_LOGIN_OR_PASSWORD,
+                title: AuthErrorConstants::TITLE_INVALID_LOGIN_OR_PASSWORD,
                 status: Response::HTTP_BAD_REQUEST,
-                detail: AuthErrorConstants::DETAIL
+                detail: AuthErrorConstants::DETAIL_INVALID_LOGIN_OR_PASSWORD
             ), Response::HTTP_BAD_REQUEST);
         }
 

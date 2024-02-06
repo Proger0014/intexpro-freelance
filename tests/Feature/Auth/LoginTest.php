@@ -89,10 +89,10 @@ class LoginTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => AuthErrorConstants::TYPE,
-            'title' => AuthErrorConstants::TITLE,
+            'type' => AuthErrorConstants::TYPE_INVALID_LOGIN_OR_PASSWORD,
+            'title' => AuthErrorConstants::TITLE_INVALID_LOGIN_OR_PASSWORD,
             'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => AuthErrorConstants::DETAIL
+            'detail' => AuthErrorConstants::DETAIL_INVALID_LOGIN_OR_PASSWORD
         ];
 
         // Act
