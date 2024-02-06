@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
+use App\Models\OrdersCategory;
 use App\Models\Permission;
+use Database\Factories\OrderFactory;
 use Illuminate\Support\Arr;
 use App\Models\Role;
 use App\Models\User;
@@ -36,6 +39,19 @@ class DatabaseSeeder extends Seeder
                     $user->assignRole($role);
                 });
         });
+
+        $this->createCategories();
+
+        Order::factory(rand(5, 25))->create();
+    }
+
+    private function createCategories(): void {
+        $categories = ['web-dev', 'programming', 'design', 'study-activities', 'content'];
+
+        collect($categories)->each(fn (string $category) =>
+            OrdersCategory::create([
+                'name' => $category
+            ]));
     }
 
     /**
