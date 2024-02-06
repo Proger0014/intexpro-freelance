@@ -13,4 +13,8 @@ class AuthErrorConstants
     public const TYPE_FORBIDDEN = CommonErrorConstants::TYPE . '/forbidden';
     public const TITLE_FORBIDDEN = 'Недостаточно прав';
     public const DETAIL_FORBIDDEN = 'Попробуйте обратиться к более вышестоящему для данного действия';
+
+    public const TYPE_UNAUTHORIZED = CommonErrorConstants::TYPE . '/unauthorized';
+    public const TITLE_UNAUTHORIZED = 'Не аутентифицированны';
+    public const DETAIL_UNAUTHORIZED = 'Попробуйте войти ещё раз';
 }

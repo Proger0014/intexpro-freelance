@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Throwable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -58,6 +59,14 @@ class Handler extends ExceptionHandler
                 detail: AuthErrorConstants::DETAIL_FORBIDDEN,
             );
             return response()->json($response, $response->status);
+        }else if($e instanceof AuthenticationException){
+            $response = new ErrorResponse(
+                type: AuthErrorConstants::TYPE_UNAUTHORIZED,
+                title: AuthErrorConstants::TITLE_UNAUTHORIZED,
+                status: Response::HTTP_UNAUTHORIZED,
+                detail: AuthErrorConstants::DETAIL_UNAUTHORIZED,
+
+            );
         }
 
         return parent::render($request, $e);
