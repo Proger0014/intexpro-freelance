@@ -67,6 +67,7 @@ class Handler extends ExceptionHandler
                 detail: AuthErrorConstants::DETAIL_UNAUTHORIZED,
 
             );
+            return response()->json($response, $response->status);
         }
 
         return parent::render($request, $e);
