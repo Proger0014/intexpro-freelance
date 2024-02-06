@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { authApi } from "../api";
 
 class AuthStore {
+  authenticatedUser;
   isAuthorized = false;
 
   login(login, password) {
@@ -9,6 +10,7 @@ class AuthStore {
       .then(data => {
         if (data.status == 200) {
           this.isAuthorized = true;
+          
         }
 
         return data;

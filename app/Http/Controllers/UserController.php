@@ -19,6 +19,6 @@ class UserController extends Controller {
             return response()->json($error, $error->status);
         }
 
-        return response()->json($userResult, Response::HTTP_OK);
+        return response()->json($userResult->getData(), Response::HTTP_OK);
     }
 }

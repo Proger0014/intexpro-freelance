@@ -2,18 +2,24 @@ import { Button, Modal, PasswordInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useStores } from "../../../stores";
 import { notifications } from "@mantine/notifications";
+import { usersApi } from "../../../api";
 
 
 const handleSubmit = (authStore, value, close, formSetErrors) => {
   authStore.login(value.login, value.password)
     .then(res => {
-      console.log(res);
       if (res.status >= 400) {
         if (res.type == "/errors/invalid-login-or-password") {
           formSetErrors({ login: 'Неверный логин или пароль', password: 'Неверный логин или пароль' });
         }
       } else if (res.status >= 200) {
         notifications.show({ title: "Успешно", message: "Вы успешно вошли", color: "green" });
+
+        usersApi.getById(res.data.authenticatedUserId)
+          .then(res => {
+            console.log(res);
+            authStore.authenticatedUser = res.data;
+          })
 
         close();
       }
