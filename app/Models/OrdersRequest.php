@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class OrdersRequest extends Model
 {
@@ -28,5 +29,12 @@ class OrdersRequest extends Model
      */
     public function order(): HasOne {
         return $this->hasOne(Order::class);
+    }
+
+    /**
+     * @return HasOneThrough<User>
+     */
+    public function ownerOfOrder(): HasOneThrough {
+        return $this->hasOneThrough(User::class, Order::class);
     }
 }

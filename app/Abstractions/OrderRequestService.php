@@ -3,10 +3,18 @@
 namespace App\Abstractions;
 
 use App\Http\Resources\Order\OrderRequestCollectionResource;
+use App\Http\Resources\Order\OrderRequestResource;
 use App\Utils\Result;
 
 interface OrderRequestService
 {
+    /**
+     * @param $orderRequestId
+     *
+     * @return Result<OrderRequestResource|null>
+     */
+    function getById($orderRequestId): Result;
+
     /**
      * @param int $userId
      * @param int $orderId
