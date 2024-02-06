@@ -17,11 +17,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class UserRoleResource extends JsonResource
 {
     private function getGivenAtRole(): string {
-        return User::whereId($this->id)->first()
-            ->roles()
-            ->where('id', $this->id)
-            ->first()
-            ->created_at;
+        return Role::whereId($this->id)->first()->created_at;
     }
 
     /**
