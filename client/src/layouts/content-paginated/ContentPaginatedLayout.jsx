@@ -1,10 +1,10 @@
 import { Header } from "../../components/header";
-import { Box, Container, Group, Pagination, Text } from "@mantine/core";
+import { Box, Container, Group, Pagination, Text, Title } from "@mantine/core";
 import { Content } from "../../components/content";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../stores";
 
-function ContentPaginatedLayout({ main, titleTop }) {
+function ContentPaginatedLayout({ main, titleTop, handleChangePage }) {
     const { paginationStore } = useStores();
 
     return (
@@ -16,7 +16,7 @@ function ContentPaginatedLayout({ main, titleTop }) {
 
                 <Container size="xl">
                     <Box py={40}>
-                        <Text>{titleTop}</Text>
+                        <Title fz="xl">{titleTop}</Title>
                     </Box>
                 </Container>
             </div>
@@ -28,11 +28,11 @@ function ContentPaginatedLayout({ main, titleTop }) {
                 </Container>
             </main>
 
-            <Box mt={25}>
+            <Box mt={25} pb={25}>
                 <Container size="xl">
                     <Content>
                         <Group justify="center">
-                            <Pagination total={paginationStore.totalPages} value={paginationStore.currentPage} />
+                            <Pagination total={paginationStore.totalPages} value={paginationStore.currentPage} onChange={handleChangePage} />
                         </Group>
                     </Content>
                 </Container>

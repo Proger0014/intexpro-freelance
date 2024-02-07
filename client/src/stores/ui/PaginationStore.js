@@ -5,7 +5,7 @@ class PaginationStore {
     currentPage = 1;
 
     setPage(page) {
-        if (page > total || page < 0) return;
+        if (page > this.totalPages || page < 0) return;
 
         this.currentPage = page;
     }
