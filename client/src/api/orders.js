@@ -8,4 +8,8 @@ function getAllInPage(page) {
   })
 }
 
-export { getAllInPage };
+function getById(id) {
+  return api.get(`/orders/${id}`);
+}
+
+export { getAllInPage, getById };

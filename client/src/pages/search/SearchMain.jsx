@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function OrderPreviewList({ orders }) {
   const list = orders.map(order => (
     <Box key={order.id}>
-      <UnstyledButton component={Link} to="/asd">
+      <UnstyledButton component={Link} to={`/orders/${order.id}`}>
         <OrderPreview
           title={order.title}
           description={order.description}
