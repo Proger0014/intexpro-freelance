@@ -6,7 +6,6 @@ use App\Constants\Errors\CommonErrorConstants;
 
 class UsersErrorConstants
 {
-    public const TYPE_EXISTS = CommonErrorConstants::TYPE . '/exists';
     public const TITLE_EXISTS = 'Юзер с таким логином уже существует';
     public const DETAIL_EXISTS = 'Попробуйте изменить логин или войти в существующий аккаунт';
 

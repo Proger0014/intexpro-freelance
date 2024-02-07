@@ -134,7 +134,7 @@ class RegisterTest extends TestCase
         ];
 
         $expectedError = [
-            'type' => UsersErrorConstants::TYPE_EXISTS,
+            'type' => CommonErrorConstants::TYPE_EXISTS,
             'title' => UsersErrorConstants::TITLE_EXISTS,
             'status' => Response::HTTP_BAD_REQUEST,
             'detail' => UsersErrorConstants::DETAIL_EXISTS
