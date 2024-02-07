@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Constants\Errors\CommonErrorConstants;
 use Illuminate\Auth\AuthenticationException;
 use Throwable;
 use Illuminate\Http\JsonResponse;
@@ -51,15 +52,16 @@ class Handler extends ExceptionHandler
             $validationErrorResponse = new ValidationErrorResponse($e->errors());
 
             return response()->json($validationErrorResponse, $validationErrorResponse->status);
-        }else if($e instanceof UnauthorizedException){
+        } else if ($e instanceof UnauthorizedException){
             $response = new ErrorResponse(
                 type: AuthErrorConstants::TYPE_FORBIDDEN,
                 title: AuthErrorConstants::TITLE_FORBIDDEN,
                 status: Response::HTTP_FORBIDDEN,
                 detail: AuthErrorConstants::DETAIL_FORBIDDEN,
             );
+
             return response()->json($response, $response->status);
-        }else if($e instanceof AuthenticationException){
+        } else if ($e instanceof AuthenticationException){
             $response = new ErrorResponse(
                 type: AuthErrorConstants::TYPE_UNAUTHORIZED,
                 title: AuthErrorConstants::TITLE_UNAUTHORIZED,
@@ -67,9 +69,19 @@ class Handler extends ExceptionHandler
                 detail: AuthErrorConstants::DETAIL_UNAUTHORIZED,
 
             );
+
+            return response()->json($response, $response->status);
+        } else {
+            $response = new ErrorResponse(
+                type: CommonErrorConstants::TYPE_INTERNAL_SERVER,
+                title: CommonErrorConstants::TITLE_INTERNAL_SERVER,
+                status: Response::HTTP_INTERNAL_SERVER_ERROR,
+                detail: CommonErrorConstants::DETAILS_INTERNAL_SERVER,
+            );
+            
             return response()->json($response, $response->status);
         }
 
-        return parent::render($request, $e);
+        // return parent::render($request, $e);
     }
 }
