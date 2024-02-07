@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
@@ -29,4 +30,9 @@ Route::controller(AuthController::class)->prefix('/auth')->group(function () {
 Route::controller(UserController::class)->prefix('/users')->group(function () {
     Route::get('/{id}', 'getById')->middleware('auth')->middleware('permission:user.read');
     Route::get('/{id}/roles', 'getRolesByUserId')->middleware('auth')->middleware('permission:user.read');
+});
+
+Route::controller(OrderController::class)->prefix('/orders')->group(function () {
+    Route::get('/', 'getAllInPage')->middleware('auth')->middleware('permission:order.read');
+    Route::get('/{id}', 'getById')->middleware('auth')->middleware('permission:order.read');
 });
