@@ -4,7 +4,7 @@ import c from "./header.module.scss";
 import { Buttons } from "./buttons";
 import HeaderSearch from "./HeaderSearch";
 
-function Header({ children, isTransparent = false, ...props }) {
+function Header({ children, isTransparent = false, logoSize = 80, ...props }) {
   const bg = isTransparent ? "0" : "indigo.9"
 
   return (
@@ -16,7 +16,7 @@ function Header({ children, isTransparent = false, ...props }) {
             <Link
               to="/">
               <Image
-                h={80}
+                h={logoSize}
                 src="/src/assets/common/logo.png" />
             </Link>
           </div>
