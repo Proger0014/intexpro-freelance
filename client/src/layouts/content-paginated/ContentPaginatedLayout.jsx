@@ -32,7 +32,7 @@ function ContentPaginatedLayout({ main, titleTop }) {
                 <Container size="xl">
                     <Content>
                         <Group justify="center">
-                            <Pagination total={paginationStore.total} value={paginationStore.currentPage} />
+                            <Pagination total={paginationStore.totalPages} value={paginationStore.currentPage} />
                         </Group>
                     </Content>
                 </Container>

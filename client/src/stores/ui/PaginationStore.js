@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
 class PaginationStore {
-    total = 1;
+    totalPages = 1;
     currentPage = 1;
 
     setPage(page) {
@@ -10,8 +10,8 @@ class PaginationStore {
         this.currentPage = page;
     }
 
-    setTotal(total) {
-        this.total = total;
+    setTotalPages(totalPages) {
+        this.totalPages = totalPages;
     }
 
     constructor() {
