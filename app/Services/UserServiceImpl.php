@@ -21,7 +21,7 @@ class UserServiceImpl implements UserService {
 
         if ($existsUserResult->isSuccess()) {
             return Result::fromError(new ResultError(
-                type: UsersErrorConstants::TYPE_EXISTS,
+                type: CommonErrorConstants::TYPE_EXISTS,
                 title: UsersErrorConstants::TITLE_EXISTS,
                 status: Response::HTTP_BAD_REQUEST,
                 detail: UsersErrorConstants::DETAIL_EXISTS
