@@ -72,10 +72,13 @@ class DatabaseSeeder extends Seeder
             'executor' => [
                 'role.read',
                 'user.read',
-                'user.update.self'
+                'user.update.self',
+                'order.read'
             ],
 
             'customer' => [
+                'order.read',
+                'order.own-created.*',
                 'role.read',
                 'user.*',
                 'role.assign-to-user.executor'
