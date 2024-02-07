@@ -2,9 +2,9 @@
 
 namespace App\Abstractions;
 
-use App\Http\Resources\Order\OrderCollectionResource;
-use App\Http\Resources\Order\OrderResource;
 use App\Utils\Result;
+use App\Http\Resources\Order\OrderResource;
+use App\Http\Resources\Order\OrderPageCollectionResource;
 
 interface OrderService
 {
@@ -18,7 +18,7 @@ interface OrderService
     /**
      * @param int $page
      *
-     * @return Result<OrderCollectionResource|null>
+     * @return Result<OrderPageCollectionResource|null>
      */
     function getAllInPage(int $page): Result;
 }

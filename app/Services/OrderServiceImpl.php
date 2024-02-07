@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Abstractions\OrderService;
 use App\Constants\Errors\CommonErrorConstants;
-use App\Http\Resources\Order\OrderCollectionResource;
+use App\Http\Resources\Order\OrderPageCollectionResource;
 use App\Http\Resources\Order\OrderResource;
 use App\Models\Order;
 use App\Utils\Result;
@@ -33,6 +33,6 @@ class OrderServiceImpl implements OrderService
     function getAllInPage(int $page): Result
     {
         return Result::fromOk(
-            new OrderCollectionResource(Order::paginate(15, [], 'page', $page)));
+            new OrderPageCollectionResource(Order::paginate(15, ['*'], 'page', $page)));
     }
 }

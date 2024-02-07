@@ -14,6 +14,10 @@ class Order extends Model
         'id', 'created_at', 'user_id'
     ];
 
+    protected $casts = [
+        'result_is_link' => 'bool'
+    ];
+
     /**
      * @return HasOne<OrdersCategory>
      */
