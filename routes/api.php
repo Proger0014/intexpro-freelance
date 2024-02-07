@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderRequestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
@@ -32,7 +33,18 @@ Route::controller(UserController::class)->prefix('/users')->group(function () {
     Route::get('/{id}/roles', 'getRolesByUserId')->middleware('auth')->middleware('permission:user.read');
 });
 
-Route::controller(OrderController::class)->prefix('/orders')->group(function () {
-    Route::get('/', 'getAllInPage')->middleware('auth')->middleware('permission:order.read');
-    Route::get('/{id}', 'getById')->middleware('auth')->middleware('permission:order.read');
+Route::prefix('/orders')->group(function () {
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/', 'getAllInPage')->middleware('auth')->middleware('permission:order.read');
+        Route::get('/{id}', 'getById')->middleware('auth')->middleware('permission:order.read');
+    });
+
+
+    Route::controller(OrderRequestController::class)->prefix('/requests')->group(function () {
+
+    });
+    Route::controller(OrderRequestController::class)->prefix('/{orderId}/requests')->group(function () {
+        Route::post('/', 'orderRequest')->middleware('auth')->middleware('permission:order.request');
+    });
 });
+

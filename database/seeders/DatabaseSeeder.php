@@ -73,7 +73,8 @@ class DatabaseSeeder extends Seeder
                 'role.read',
                 'user.read',
                 'user.update.self',
-                'order.read'
+                'order.read',
+                'order.request'
             ],
 
             'customer' => [

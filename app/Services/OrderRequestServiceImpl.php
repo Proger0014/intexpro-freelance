@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Abstractions\OrderRequestService;
 use App\Abstractions\OrderService;
 use App\Abstractions\UserService;
+use App\Constants\Domains\Order\OrderRequestStatuses;
 use App\Constants\Errors\CommonErrorConstants;
 use App\Http\Resources\Order\OrderRequestCollectionResource;
 use App\Models\OrdersRequest;
@@ -50,7 +51,8 @@ class OrderRequestServiceImpl implements OrderRequestService
 
         OrdersRequest::create([
             'order_id' => $orderId,
-            'user_id' => $userId
+            'user_id' => $userId,
+            'status' => OrderRequestStatuses::WAITING
         ]);
 
         return Result::fromOk(true);
