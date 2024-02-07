@@ -16,7 +16,7 @@ function OrderPreviewList({ orders }) {
           py={10}  />
       </UnstyledButton>
       
-      <Divider size="sm" />
+      <Divider color="indigo.2" />
     </Box>
   ));
 

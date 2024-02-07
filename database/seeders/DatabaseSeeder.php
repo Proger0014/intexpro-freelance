@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
 
         $this->createCategories();
 
-        Order::factory(rand(5, 25))->create();
+        Order::factory(rand(25, 60))->create();
     }
 
     private function createCategories(): void {

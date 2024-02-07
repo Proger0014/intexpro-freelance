@@ -8,7 +8,7 @@ function OrderPreview({ title, description, category, expires, ...props }) {
       <Text>{description}</Text>
 
       <Group justify="space-between">
-        <Text>{category}</Text>
+        <Text c="gray.5">{category}</Text>
         <Text c="gray.5">{expires}</Text>
       </Group>
     </Stack>
