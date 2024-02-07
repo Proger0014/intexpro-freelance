@@ -8,6 +8,8 @@ use App\Abstractions\UserService;
 use App\Constants\Domains\Order\OrderRequestStatuses;
 use App\Constants\Errors\CommonErrorConstants;
 use App\Http\Resources\Order\OrderRequestCollectionResource;
+use App\Http\Resources\Order\OrderRequestResource;
+use App\Models\Order;
 use App\Models\OrdersRequest;
 use App\Models\User;
 use App\Utils\Result;
@@ -118,7 +120,7 @@ class OrderRequestServiceImpl implements OrderRequestService
         return Result::fromOk(true);
     }
 
-    function getById($orderRequestId): Result
+    function getById(int $orderRequestId): Result
     {
         $existsOrderRequest = OrdersRequest::whereId($orderRequestId)->first();
 
@@ -132,5 +134,33 @@ class OrderRequestServiceImpl implements OrderRequestService
         }
 
         return Result::fromOk($existsOrderRequest);
+    }
+
+    function getByOrderIdInUser(int $orderId, int $userId): Result
+    {
+        $existsOrderResult = $this->orderService->getById($orderId);
+
+        if ($existsOrderResult->isError()) {
+            return Result::fromError($existsOrderResult->getError());
+        }
+
+        $existsUserResult = $this->userService->getById($userId);
+
+        if ($existsUserResult->isError()) {
+            return Result::fromError($existsUserResult->getError());
+        }
+
+        $existsOrderRequest = Order::whereId($orderId)->first()->orderRequests()->where('user_id', $userId)->first();
+
+        if (! $existsOrderRequest) {
+            return Result::fromError(new ResultError(
+                type: CommonErrorConstants::TYPE_NOT_FOUND,
+                title: 'Запроса не существует',
+                status: Response::HTTP_NOT_FOUND,
+                detail: 'Данный пользователь ещё не делал запроса на этот заказ'
+            ));
+        }
+
+        return Result::fromOk(new OrderRequestResource($existsOrderRequest));
     }
 }

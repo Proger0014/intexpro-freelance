@@ -74,7 +74,8 @@ class DatabaseSeeder extends Seeder
                 'user.read',
                 'user.update.self',
                 'order.read',
-                'order.request'
+                'order-request.create',
+                'order-request.read',
             ],
 
             'customer' => [

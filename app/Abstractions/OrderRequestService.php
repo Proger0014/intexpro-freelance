@@ -13,7 +13,15 @@ interface OrderRequestService
      *
      * @return Result<OrderRequestResource|null>
      */
-    function getById($orderRequestId): Result;
+    function getById(int $orderRequestId): Result;
+
+    /***
+     * @param int $orderId
+     * @param int $userId
+     *
+     * @return Result<OrderRequestResource|null>
+     */
+    function getByOrderIdInUser(int $orderId, int $userId): Result;
 
     /**
      * @param int $userId

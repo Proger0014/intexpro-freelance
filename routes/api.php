@@ -43,8 +43,9 @@ Route::prefix('/orders')->group(function () {
     Route::controller(OrderRequestController::class)->prefix('/requests')->group(function () {
 
     });
-    Route::controller(OrderRequestController::class)->prefix('/{orderId}/requests')->group(function () {
-        Route::post('/', 'orderRequest')->middleware('auth')->middleware('permission:order.request');
+    Route::controller(OrderRequestController::class)->prefix('/{orderId}/request')->group(function () {
+        Route::post('/', 'orderRequest')->middleware('auth')->middleware('permission:order-request.create');
+        Route::get('/exists', 'requestExists')->middleware('auth')->middleware('permission:order-request.read');
     });
 });
 
