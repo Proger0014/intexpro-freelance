@@ -26,6 +26,8 @@ const handleSubmit = (authStore, value, close, formSetErrors) => {
 function Login({ opened, close }) {
   const { authStore } = useStores();
   
+  console.log(11);
+
   const form = useForm({
     initialValues: {
       'login': '',
