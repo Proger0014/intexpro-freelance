@@ -2,6 +2,7 @@ import { Box, Button, Group, Skeleton, Stack, Text, Title } from "@mantine/core"
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../stores";
 import { STATUS_ORDER_REQUEST_CANCELED, STATUS_ORDER_REQUEST_WAITING } from "../../config";
+import { notifications } from "@mantine/notifications";
 
 function OrderInfo({ title, category, expires, description, orderRequest }) {
   const onClick = orderRequest?.canRequest
@@ -59,6 +60,13 @@ function OrderMain() {
     fulfilled: (value) => {
       function handleClick() {
         orderStore.makeRequest(value.id);
+
+        orderStore.request
+          .then(_ =>
+            notifications.show({ message: "Запрос успешно отправлен", color: "green" }))
+          .catch(_ =>
+            notifications.show({ message: "Произошла неизвестная ошибка", color: "red" }));
+
       }
 
       const orderRequest = {...orderStore.request.value, handler: handleClick };

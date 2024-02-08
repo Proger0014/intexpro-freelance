@@ -2,6 +2,7 @@ import { action, makeObservable, observable } from "mobx";
 import { fromPromise } from "mobx-utils";
 import { ordersApi, ordersRequestApi } from "../api";
 import { STATUS_ORDER_REQUEST_NOTHING, STATUS_ORDER_REQUEST_ACCEPTED, STATUS_ORDER_REQUEST_CANCELED, STATUS_ORDER_REQUEST_WAITING } from "../config";
+import { notifications } from "@mantine/notifications";
 
 const orderRequestBase = { data: { status: STATUS_ORDER_REQUEST_NOTHING }, canRequest: true };
 
@@ -13,8 +14,12 @@ class OrderStore {
     if (!(this.authStore.authenticatedUser.roles.find(role => role.name == "executor") ?? false)) return;
 
     ordersRequestApi.request(orderId)
-      .then(_ => this.fetchOrder(orderId))
-      .catch(_ => this.fetchOrder(orderId));
+      .then(_ => {
+        return this.fetchOrder(orderId);
+      })
+      .catch(_ => {
+        return this.fetchOrder(orderId);
+      });
   }
 
   fetchOrderRequest(orderId) {
