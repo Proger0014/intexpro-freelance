@@ -12,21 +12,21 @@ function handleLogout(authStore) {
 }
 
 function Menu() {
-    const [userName, setUserName] = useState("");
-    const [roles, setRoles] = useState(undefined);
-
     const { authStore } = useStores();
+    const [user, setUser] = useState(undefined);
+
+    useEffect(() => authStore.fetchUser(authStore.authenticatedUserId), [0]);
 
     useEffect(() => {
-      authStore.authenticatedUser.case({
-        fulfilled: (value) => {
-          setUserName(`${value.firstName} ${value.lastName}`);
-          setRoles(value.roles);
-        }
-      });
-    }, [authStore.authenticatedUser.state]);
+        authStore.authenticatedUser.case({
+            fulfilled: (value) => setUser(value),
+            pending: () => undefined
+        });
+    });
+
+    const userName = `${user?.firstName} ${user?.lastName}`;
     
-    const rolesBlocks = roles?.map(role => (
+    const rolesBlocks = user?.roles?.map(role => (
       <Text key={role.id}>{rolesUtils.translateRole(role.name)}</Text>
     ));
 
