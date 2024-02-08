@@ -3,9 +3,9 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "../../stores";
 
 function OrderInfo({ title, category, expires, description, orderRequest }) {
-  const buttonText = orderRequest?.canRequest ?? true
-    ? "Откликнуться"
-    : orderRequest?.additional.message;
+  const onClick = orderRequest?.canRequest
+    ? orderRequest.handler
+    : undefined;
 
   return (
     <Stack>
@@ -19,7 +19,7 @@ function OrderInfo({ title, category, expires, description, orderRequest }) {
       <Text>{description}</Text>
 
       <Group justify="end" mt={25}>
-        <Button disabled={!orderRequest?.canRequest} size="compact-md">{buttonText}</Button>
+        <Button onClick={onClick} disabled={!orderRequest?.canRequest} size="compact-md">Откликнуться</Button>
       </Group>
     </Stack>
   )
@@ -41,12 +41,22 @@ function OrderMain() {
 
   const order = orderStore.order.case({
     pending: () => <SkeletonLoading />,
-    fulfilled: (value) => <OrderInfo 
-      title={value.title}
-      category={value.categoryId}
-      expires={value.expiresAt}
-      description={value.description}
-      orderRequest={orderStore.request.value} />
+    fulfilled: (value) => {
+      function handleClick() {
+        orderStore.makeRequest(value.id);
+      }
+
+      const orderRequest = {...orderStore.request.value, handler: handleClick };
+
+      return (
+        <OrderInfo 
+        title={value.title}
+        category={value.categoryId}
+        expires={value.expiresAt}
+        description={value.description}
+        orderRequest={orderRequest} />
+      ); 
+    }
   });
 
   return (
