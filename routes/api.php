@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderCategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderRequestController;
 use App\Http\Controllers\UserController;
@@ -47,6 +48,10 @@ Route::prefix('/orders')->group(function () {
         Route::post('/', 'orderRequest')->middleware('auth')->middleware('permission:order-request.create');
         Route::get('/exists', 'requestExists')->middleware('auth')->middleware('permission:order-request.read');
         Route::get('/', 'getRequestByOrderId')->middleware('auth')->middleware('permission:order-request.read');
+    });
+
+    Route::controller(OrderCategoryController::class)->prefix('/categories')->group(function () {
+        Route::get('/{id}', 'getById')->middleware('auth')->middleware('permission:order.read');
     });
 });
 
