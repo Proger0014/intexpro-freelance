@@ -3,8 +3,25 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "../../stores";
 import { STATUS_ORDER_REQUEST_CANCELED, STATUS_ORDER_REQUEST_WAITING } from "../../config";
 import { notifications } from "@mantine/notifications";
+import { useEffect, useState } from "react";
+import { ordersCagoriesApi } from "../../api";
+import { ordersCategoriesUtils } from "../../utils";
 
-function OrderInfo({ title, category, expires, description, orderRequest }) {
+function OrderInfo({ title, categoryId, expires, description, orderRequest }) {
+  const [category, setCategory] = useState(undefined);
+
+  useEffect(() => {
+    ordersCagoriesApi.getById(categoryId)
+      .then(res => {
+        const translatedCategory = ordersCategoriesUtils.translate(res.data.name);
+        setCategory(translatedCategory);
+      });
+  }, [0])
+
+  const categoryComponent = !category
+    ? <Skeleton w={180} h={6} />
+    : <Text c="gray.5">{category}</Text>;
+
   const onClick = orderRequest?.canRequest
     ? orderRequest.handler
     : undefined;
@@ -28,7 +45,7 @@ function OrderInfo({ title, category, expires, description, orderRequest }) {
       </Group>
 
       <Group mb={25} justify="space-between">
-        <Text c="gray.5">{category}</Text>
+        {categoryComponent}
         <Text c="gray.5">{expires}</Text>
       </Group>
 
@@ -74,7 +91,7 @@ function OrderMain() {
       return (
         <OrderInfo 
         title={value.title}
-        category={value.categoryId}
+        categoryId={value.categoryId}
         expires={value.expiresAt}
         description={value.description}
         orderRequest={orderRequest} />

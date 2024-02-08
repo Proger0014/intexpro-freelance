@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from "mobx";
 import { fromPromise } from "mobx-utils";
-import { ordersApi } from "../../api";
+import { ordersApi, ordersCagoriesApi } from "../../api";
 
 class SearchStore {
   orders = undefined;

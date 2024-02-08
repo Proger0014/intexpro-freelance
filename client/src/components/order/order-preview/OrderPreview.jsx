@@ -1,6 +1,11 @@
-import { Group, Title, Text, Stack } from "@mantine/core";
+import { Group, Title, Text, Stack, Skeleton } from "@mantine/core";
 
 function OrderPreview({ title, description, category, expires, ...props }) {
+  const categoryComponent = !category
+    ? <Skeleton w={180} h={6} />
+    : <Text c="gray.5">{category}</Text>;
+
+
   return (
     <Stack {...props} >
       <Title fz="lg">{title}</Title>
@@ -8,7 +13,7 @@ function OrderPreview({ title, description, category, expires, ...props }) {
       <Text>{description}</Text>
 
       <Group justify="space-between">
-        <Text c="gray.5">{category}</Text>
+        {categoryComponent}
         <Text c="gray.5">{expires}</Text>
       </Group>
     </Stack>

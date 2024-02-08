@@ -3,21 +3,44 @@ import { OrderPreview } from "../../components/order";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../stores";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ordersCagoriesApi } from "../../api";
+import { ordersCategoriesUtils } from "../../utils";
 
-function OrderPreviewList({ orders }) {
-  const list = orders.map(order => (
-    <Box key={order.id}>
-      <UnstyledButton component={Link} to={`/orders/${order.id}`}>
+function OrderPreviewListItem({ id, title, description, categoryId, expiresAt }) {
+  const [category, setCategory] = useState(undefined);
+
+  useEffect(() => {
+    ordersCagoriesApi.getById(categoryId).then(res => {
+      setCategory(ordersCategoriesUtils.translate(res.data.name));
+    })
+  }, [0]);
+
+  return (
+    <Box>
+      <UnstyledButton component={Link} to={`/orders/${categoryId}`}>
         <OrderPreview
-          title={order.title}
-          description={order.description}
-          category={order.categoryId}
-          expires={order.expiresAt}
+          title={title}
+          description={description}
+          category={category}
+          expires={expiresAt}
           py={10}  />
       </UnstyledButton>
       
       <Divider color="indigo.2" />
     </Box>
+  )
+}
+
+function OrderPreviewList({ orders }) {
+  const list = orders.map(order => (
+    <OrderPreviewListItem
+      key={order.id}
+      id={order.id}
+      title={order.title}
+      description={order.description}
+      categoryId={order.categoryId}
+      expiresAt={order.expiresAt}  />
   ));
 
   return (
