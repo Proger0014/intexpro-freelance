@@ -1,6 +1,6 @@
 import { Box, Button, Group, Skeleton, Stack, Text, Title } from "@mantine/core";
 import { observer } from "mobx-react-lite";
-import { useStores } from "../../stores";
+import { AuthStore, useStores } from "../../stores";
 import { useEffect, useState } from "react";
 
 function OrderInfo({ title, category, expires, description }) {
@@ -35,30 +35,21 @@ function SkeletonLoading() {
 
 function OrderMain() {
   const { orderStore } = useStores();
-  const [order, setOrder] = useState(undefined);
 
-  useEffect(() => {
-    const orderFetch = orderStore.order.case({
-      pending: () => undefined,
-      fulfilled: (value) => value
-    });
+  const order = orderStore.order.case({
+    pending: () => <SkeletonLoading />,
+    fulfilled: (value) => <OrderInfo 
+      title={value.title}
+      category={value.categoryId}
+      expires={value.expiresAt}
+      description={value.description} />
+  });
 
-    setOrder(orderFetch);
-  }, [orderStore.order.state]);
-
-  console.log(order);
-
-  const orderComponent = order == undefined
-    ? <SkeletonLoading />
-    : <OrderInfo 
-        title={value.title}
-        category={value.categoryId}
-        expires={value.expiresAt}
-        description={value.description} />;
+  console.log(orderStore.request);
 
   return (
     <Box>
-      {orderComponent}
+      {order}
     </Box>
   )
 }
