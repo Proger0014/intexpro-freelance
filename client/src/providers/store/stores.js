@@ -1,15 +1,13 @@
 import { AuthStore, OrderStore, PaginationStore, SearchStore } from "../../stores";
 
-const paginationStore = new PaginationStore();
+const stores = { };
 
-const stores = {
-  // domain
-  authStore: new AuthStore(),
-  orderStore: new OrderStore(),
+// domain
+stores.authStore = new AuthStore();
+stores.orderStore = new OrderStore(stores.authStore);
 
-  // ui
-  paginationStore: paginationStore,
-  searchStore: new SearchStore(paginationStore),
-};
+// ui
+stores.paginationStore = new PaginationStore();
+stores.searchStore = new SearchStore(stores.paginationStore);
 
 export { stores };

@@ -5,7 +5,11 @@ function request(orderId) {
 }
 
 function requestIsExists(orderId) {
-  return api.get(`/orders/${orderId}/exists`);
+  return api.get(`/orders/${orderId}/request/exists`);
 }
 
-export { request, requestIsExists };
+function getRequestByOrderIdAndUser(orderId) {
+  return api.get(`/orders/${orderId}/request`);
+}
+
+export { request, requestIsExists, getRequestByOrderIdAndUser };

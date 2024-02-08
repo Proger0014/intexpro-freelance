@@ -39,4 +39,16 @@ class OrderRequestController extends Controller
 
         return response()->json($response);
     }
+
+    public function getRequestByOrderId(int $orderId): JsonResponse {
+        $requestResult = $this->orderRequestService->getByOrderIdInUser($orderId, Auth::user()->id);
+
+        if ($requestResult->isError()) {
+            $error = $requestResult->getError();
+            
+            return response()->json($error, $error->status);
+        }
+
+        return response()->json($requestResult->getData());
+    }
 }
