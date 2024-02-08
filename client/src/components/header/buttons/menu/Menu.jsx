@@ -13,20 +13,12 @@ function handleLogout(authStore) {
 
 function Menu() {
     const { authStore } = useStores();
-    const [user, setUser] = useState(undefined);
 
-    useEffect(() => authStore.fetchUser(authStore.authenticatedUserId), [0]);
-
-    useEffect(() => {
-        authStore.authenticatedUser.case({
-            fulfilled: (value) => setUser(value),
-            pending: () => undefined
-        });
-    });
-
-    const userName = `${user?.firstName} ${user?.lastName}`;
+    const userName = `${authStore.authenticatedUser?.firstName} ${authStore.authenticatedUser?.lastName}`;
     
-    const rolesBlocks = user?.roles?.map(role => (
+    console.log(authStore.authenticatedUser);
+
+    const rolesBlocks = authStore.authenticatedUser?.roles?.map(role => (
       <Text key={role.id}>{rolesUtils.translateRole(role.name)}</Text>
     ));
 

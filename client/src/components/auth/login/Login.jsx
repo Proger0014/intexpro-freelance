@@ -8,26 +8,26 @@ import { observer } from "mobx-react-lite";
 const handleSubmit = (authStore, value, close, formSetErrors) => {
   authStore.login(value.login, value.password);
 
-  authStore.loginStatus.case({
-    fulfilled: (value) => {
-      notifications.show({ title: "Успешно", message: "Вы успешно вошли", color: "green" });
-      close();
-    },
-    rejected: (value) => {
-      if (value.status >= 400) {
-        if (value.type == "/errors/invalid-login-or-password") {
-          formSetErrors({ login: 'Неверный логин или пароль', password: 'Неверный логин или пароль' });
+  setTimeout(() => {
+    authStore.loginStatus.case({
+      fulfilled: (value) => {
+        notifications.show({ title: "Успешно", message: "Вы успешно вошли", color: "green" });
+        close();
+      },
+      rejected: (value) => {
+        if (value.status >= 400) {
+          if (value.type == "/errors/invalid-login-or-password") {
+            formSetErrors({ login: 'Неверный логин или пароль', password: 'Неверный логин или пароль' });
+          }
         }
       }
-    }
-  })
+    })
+  }, 3000);
 };
 
 function Login({ opened, close }) {
   const { authStore } = useStores();
   
-  console.log(11);
-
   const form = useForm({
     initialValues: {
       'login': '',

@@ -18,9 +18,8 @@ class AuthStore {
           .then(rolesRes => {
             return { ...userRes.data, ...{ "roles": rolesRes.data.roles } }
           })
-      });
-
-    this.setAuthenticatedUser(fromPromise(authenticatedUserPromise));
+      })
+      .then(res => this.setAuthenticatedUser(res));
   }
 
   login(login, password) {
@@ -47,17 +46,21 @@ class AuthStore {
       if (res.status < 300) {
         this.setAuthotized(false);
         this.setAuthenticatedUserId(-1);
-        this.setAuthenticatedUser(undefined);
+        this.setAuthenticatedUser({});
       }
     });
 
   }
 
   setAuthotized(isAuthorized) {
+    if (this.isAuthorized == isAuthorized) return;
+
     this.isAuthorized = isAuthorized;
   }
 
   setAuthenticatedUserId(userId) {
+    if (userId == this.authenticatedUserId) return;
+
     this.authenticatedUserId = userId;
   }
 
@@ -72,13 +75,10 @@ class AuthStore {
       properties: [
         "authenticatedUserId",
         "isAuthorized",
+        "authenticatedUser"
       ],
       storage: localStorage
     });
-    
-    if (this.authenticatedUserId != -1) {
-      this.fetchUser(this.authenticatedUserId);
-    }
   }
 }
 
