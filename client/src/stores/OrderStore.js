@@ -9,15 +9,20 @@ class OrderStore {
 
   fetchOrder(orderId) {
     const orderPromise = ordersApi.getById(orderId)
-      .then(res => {
-        if (this.authStore.authenticatedUser.roles.includes("executor")) {
+      .then(resOrder => {
+        const user = this.authStore.authenticatedUser?.case({
+          pending: () => null,
+          fulfilled: (value) => value
+        });
+
+        if (user?.roles.find(role => role.name == "executor") ?? false) {
           const requestOrderPromise = ordersRequestApi.getRequestByOrderIdAndUser(orderId)
-            .then(res => {
+            .then(resRequest => {
               const orderRequestObject = {
-                canRequest: res.data.status === STATUS_ORDER_REQUEST_NOTHING,
+                canRequest: resRequest.data.status === STATUS_ORDER_REQUEST_NOTHING,
               };
 
-              switch(res.data.status) {
+              switch(resRequest.data.status) {
                 case STATUS_ORDER_REQUEST_WAITING:
                   orderRequestObject.additional.message = "Запрос ещё ожидает ответа";
                   break;
@@ -31,14 +36,14 @@ class OrderStore {
                   break;
               }
 
-              return { ...res.data, ...orderRequestObject };
+              return { ...resRequest.data, ...orderRequestObject };
             });
 
           this.request = fromPromise(requestOrderPromise);
         }
 
 
-        return res.data;
+        return resOrder.data;
       });
 
     this.order = fromPromise(orderPromise);
