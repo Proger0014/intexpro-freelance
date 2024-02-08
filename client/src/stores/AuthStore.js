@@ -20,15 +20,15 @@ class AuthStore {
           })
       });
 
-    this.authenticatedUser = fromPromise(authenticatedUserPromise);
+    this.setAuthenticatedUser(fromPromise(authenticatedUserPromise));
   }
 
   login(login, password) {
     const loginPromise = authApi.login(login, password)
       .then(data => {
         if (data.status == 200) {
-          this.isAuthorized = true;
-          this.authenticatedUserId = data.data.authenticatedUserId;
+          this.setAuthotized(true);
+          this.setAuthenticatedUserId(data.data.authenticatedUserId)
 
           this.fetchUser(data.data.authenticatedUserId);
         }
@@ -45,12 +45,24 @@ class AuthStore {
   logout() {
     authApi.logout().then(res => {
       if (res.status < 300) {
-        this.authenticatedUser = undefined;
-        this.isAuthorized = false;
-        this.authenticatedUserId = -1;
+        this.setAuthotized(false);
+        this.setAuthenticatedUserId(-1);
+        this.setAuthenticatedUser(undefined);
       }
     });
 
+  }
+
+  setAuthotized(isAuthorized) {
+    this.isAuthorized = isAuthorized;
+  }
+
+  setAuthenticatedUserId(userId) {
+    this.authenticatedUserId = userId;
+  }
+
+  setAuthenticatedUser(user) {
+    this.authenticatedUser = user;
   }
 
   constructor() {
