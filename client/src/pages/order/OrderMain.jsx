@@ -1,9 +1,12 @@
 import { Box, Button, Group, Skeleton, Stack, Text, Title } from "@mantine/core";
 import { observer } from "mobx-react-lite";
-import { AuthStore, useStores } from "../../stores";
-import { useEffect, useState } from "react";
+import { useStores } from "../../stores";
 
-function OrderInfo({ title, category, expires, description }) {
+function OrderInfo({ title, category, expires, description, orderRequest }) {
+  const buttonText = orderRequest?.canRequest ?? true
+    ? "Откликнуться"
+    : orderRequest?.additional.message;
+
   return (
     <Stack>
       <Title fz="lg">{title}</Title>
@@ -16,7 +19,7 @@ function OrderInfo({ title, category, expires, description }) {
       <Text>{description}</Text>
 
       <Group justify="end" mt={25}>
-        <Button size="compact-md">Откликнуться</Button>
+        <Button disabled={!orderRequest?.canRequest} size="compact-md">{buttonText}</Button>
       </Group>
     </Stack>
   )
@@ -42,10 +45,9 @@ function OrderMain() {
       title={value.title}
       category={value.categoryId}
       expires={value.expiresAt}
-      description={value.description} />
+      description={value.description}
+      orderRequest={orderStore.request.value} />
   });
-
-  console.log(orderStore.request);
 
   return (
     <Box>

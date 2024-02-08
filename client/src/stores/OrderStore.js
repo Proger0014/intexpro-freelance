@@ -44,15 +44,19 @@ class OrderStore {
 
     const orderPromise = ordersApi.getById(orderId)
       .then(resOrder => {
+
+
         return resOrder.data;
       });
 
 
-    this.order = fromPromise(orderPromise);
-
-    this.order.then(value => {
+    const fetchResult = orderPromise.then(value => {
       this.fetchOrderRequest(value.id);
-    })
+
+      return value;
+    });
+
+    this.order = fromPromise(fetchResult);
   }
 
   constructor(authStore) {
