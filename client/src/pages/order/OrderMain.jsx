@@ -1,15 +1,30 @@
 import { Box, Button, Group, Skeleton, Stack, Text, Title } from "@mantine/core";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../stores";
+import { STATUS_ORDER_REQUEST_CANCELED, STATUS_ORDER_REQUEST_WAITING } from "../../config";
 
 function OrderInfo({ title, category, expires, description, orderRequest }) {
   const onClick = orderRequest?.canRequest
     ? orderRequest.handler
     : undefined;
 
+  const orderRequestStatus = !orderRequest?.canRequest
+    ? (
+      <Text c={
+        orderRequest?.status == STATUS_ORDER_REQUEST_WAITING
+          ? "orange"
+          : orderRequest?.status == STATUS_ORDER_REQUEST_CANCELED
+          ? "red"
+          : "green"
+      }>{orderRequest?.additional?.message}</Text>
+    ) : undefined;
+
   return (
     <Stack>
-      <Title fz="lg">{title}</Title>
+      <Group justify="space-between">
+        <Title fz="lg">{title}</Title>
+        {orderRequestStatus}
+      </Group>
 
       <Group mb={25} justify="space-between">
         <Text c="gray.5">{category}</Text>
