@@ -19,7 +19,7 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
-        $usersId = Role::whereName('customer')->users()->pluck('id')->all();
+        $usersId = Role::whereName('customer')->first()->users()->pluck('id')->all();
 
         $categoriesId = OrdersCategory::pluck('id')->all();
 
