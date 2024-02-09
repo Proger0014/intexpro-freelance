@@ -1,9 +1,10 @@
 import { Group, Image, Stack, Text, Button } from "@mantine/core";
 import HomeLinks from "./HomeLinks";
+import { Link as RouterLink } from "react-router-dom";
 
-function Link({ logo, title }) {
+function Link({ logo, title, to }) {
   return (
-    <Button bg="none" h={150}>
+    <Button bg="none" h={150} component={RouterLink} to={to}>
         <Stack align="center">
           <Image
             h={90}
@@ -20,7 +21,8 @@ function HomeMain({ ...props }) {
     <Link 
       key={homeLink.logo}
       logo={homeLink.logo}
-      title={homeLink.title} />
+      title={homeLink.title}
+      to={homeLink.to} />
   ))
 
   return (

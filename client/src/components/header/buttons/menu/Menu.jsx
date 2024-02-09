@@ -12,21 +12,13 @@ function handleLogout(authStore) {
 }
 
 function Menu() {
-    const [userName, setUserName] = useState("");
-    const [roles, setRoles] = useState(undefined);
-
     const { authStore } = useStores();
 
-    useEffect(() => {
-      authStore.authenticatedUser.case({
-        fulfilled: (value) => {
-          setUserName(`${value.firstName} ${value.lastName}`);
-          setRoles(value.roles);
-        }
-      });
-    }, [authStore.authenticatedUser.state]);
+    const userName = `${authStore.authenticatedUser?.firstName} ${authStore.authenticatedUser?.lastName}`;
     
-    const rolesBlocks = roles?.map(role => (
+    console.log(authStore.authenticatedUser);
+
+    const rolesBlocks = authStore.authenticatedUser?.roles?.map(role => (
       <Text key={role.id}>{rolesUtils.translateRole(role.name)}</Text>
     ));
 

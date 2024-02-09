@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
+use App\Models\OrdersCategory;
 use App\Models\Permission;
+use Database\Factories\OrderFactory;
 use Illuminate\Support\Arr;
 use App\Models\Role;
 use App\Models\User;
@@ -28,7 +31,7 @@ class DatabaseSeeder extends Seeder
         });
 
         User::factory(rand(5, 25))->create()->each(function (User $user) use ($createdRoles) {
-            $randomRoleForUser = Arr::random([ 'executor', 'customer', 'admin'], 1);
+            $randomRoleForUser = Arr::random([ 'executor', 'customer', 'admin' ], 1);
 
             collect($createdRoles)
                 ->filter(fn (Role $role) => in_array($role->name, $randomRoleForUser))
@@ -36,6 +39,19 @@ class DatabaseSeeder extends Seeder
                     $user->assignRole($role);
                 });
         });
+
+        $this->createCategories();
+
+        Order::factory(rand(25, 60))->create();
+    }
+
+    private function createCategories(): void {
+        $categories = ['web-dev', 'programming', 'design', 'study-activities', 'content'];
+
+        collect($categories)->each(fn (string $category) =>
+            OrdersCategory::create([
+                'name' => $category
+            ]));
     }
 
     /**
@@ -56,10 +72,15 @@ class DatabaseSeeder extends Seeder
             'executor' => [
                 'role.read',
                 'user.read',
-                'user.update.self'
+                'user.update.self',
+                'order.read',
+                'order-request.create',
+                'order-request.read',
             ],
 
             'customer' => [
+                'order.read',
+                'order.own-created.*',
                 'role.read',
                 'user.*',
                 'role.assign-to-user.executor'

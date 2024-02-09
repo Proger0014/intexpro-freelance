@@ -1,26 +1,35 @@
 import { makeAutoObservable } from "mobx";
 import { authApi, usersApi } from "../api";
 import { fromPromise } from "mobx-utils";
+import { makePersistable } from "mobx-persist-store";
+
+const AUTH_STORE = "AUTH_STORE";
 
 class AuthStore {
+  authenticatedUserId = -1;
   authenticatedUser = undefined;
   isAuthorized = false;
+  loginStatus = undefined;
+
+  fetchUser(authenticatedUserId) {
+    const authenticatedUserPromise = usersApi.getById(authenticatedUserId)
+      .then(userRes => {
+        return usersApi.getRolesByUserId(authenticatedUserId)
+          .then(rolesRes => {
+            return { ...userRes.data, ...{ "roles": rolesRes.data.roles } }
+          })
+      })
+      .then(res => this.setAuthenticatedUser(res));
+  }
 
   login(login, password) {
-    return authApi.login(login, password)
+    const loginPromise = authApi.login(login, password)
       .then(data => {
         if (data.status == 200) {
-          this.isAuthorized = true;
+          this.setAuthotized(true);
+          this.setAuthenticatedUserId(data.data.authenticatedUserId)
 
-          const authenticatedUserPromise = usersApi.getById(data.data.authenticatedUserId)
-            .then(userRes => {
-              return usersApi.getRolesByUserId(data.data.authenticatedUserId)
-                .then(rolesRes => {
-                  return { ...userRes.data, ...{ "roles": rolesRes.data.roles } }
-                })
-            });
-
-          this.authenticatedUser = fromPromise(authenticatedUserPromise);
+          this.fetchUser(data.data.authenticatedUserId);
         }
 
         return data;
@@ -28,20 +37,48 @@ class AuthStore {
       .catch((error) => {
         return error.response.data;
       })
+
+    this.loginStatus = fromPromise(loginPromise);
   }
 
   logout() {
     authApi.logout().then(res => {
       if (res.status < 300) {
-        this.authenticatedUser = undefined;
-        this.isAuthorized = false;
+        this.setAuthotized(false);
+        this.setAuthenticatedUserId(-1);
+        this.setAuthenticatedUser({});
       }
     });
 
   }
 
+  setAuthotized(isAuthorized) {
+    if (this.isAuthorized == isAuthorized) return;
+
+    this.isAuthorized = isAuthorized;
+  }
+
+  setAuthenticatedUserId(userId) {
+    if (userId == this.authenticatedUserId) return;
+
+    this.authenticatedUserId = userId;
+  }
+
+  setAuthenticatedUser(user) {
+    this.authenticatedUser = user;
+  }
+
   constructor() {
     makeAutoObservable(this);
+    makePersistable(this, {
+      name: AUTH_STORE,
+      properties: [
+        "authenticatedUserId",
+        "isAuthorized",
+        "authenticatedUser"
+      ],
+      storage: localStorage
+    });
   }
 }
 

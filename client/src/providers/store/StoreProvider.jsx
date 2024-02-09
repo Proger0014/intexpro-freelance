@@ -1,8 +1,7 @@
 import { createContext } from "react";
-import { RootStore } from "../../stores";
 import { stores } from "./stores";
 
-const rootStore = new RootStore({...stores});
+const rootStore = { ...stores };
 
 const Context = createContext(stores);
 

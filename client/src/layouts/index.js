@@ -1,1 +1,3 @@
-export { default as HomeLayout } from "./home/HomeLayout";
+export { HomeLayout } from "./home";
+export { ContentLayout } from "./content";
+export { ContentPaginatedLayout } from "./content-paginated";
