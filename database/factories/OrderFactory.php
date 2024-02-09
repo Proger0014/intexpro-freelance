@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\OrdersCategory;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
-        $usersId = User::pluck('id')->all();
+        $usersId = Role::whereName('customer')->users()->pluck('id')->all();
 
         $categoriesId = OrdersCategory::pluck('id')->all();
 
