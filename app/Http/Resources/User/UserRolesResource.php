@@ -21,8 +21,6 @@ class UserRolesResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $userId = $this->id;
-
         return [
             'userId' => $this->id,
             'roles' => UserRoleResource::collection($this->roles()->get())

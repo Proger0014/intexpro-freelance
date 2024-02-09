@@ -21,18 +21,17 @@ class DatabaseProductionSeeder extends Seeder
 
         $createdPermissions = $this->createPermissions();
 
-        collect($createdRoles)->where(fn (Role $role) => $role->name != 'admin')
-            ->each(function (Role $role) use ($createdPermissions) {
-                $permissions = collect($createdPermissions[$role->name])->values()->all();
+        collect($createdRoles)->each(function (Role $role) use ($createdPermissions) {
+            $permissions = collect($createdPermissions[$role->name])->values()->all();
 
-                $role->syncPermissions($permissions);
-            });
+            $role->syncPermissions($permissions);
+        });
 
         $roles = [ 'executor', 'customer' ];
 
         collect($roles)->each(function (string $roleName) {
             $role = Role::whereName($roleName)->first();
-            $user = User::factory()->create([ 'login' => $roleName ])->first();
+            $user = User::factory()->create([ 'login' => $roleName ])->where('login', $roleName)->first();
 
             $user->assignRole($role);
         });
@@ -55,10 +54,10 @@ class DatabaseProductionSeeder extends Seeder
      * @return array<Role>
      */
     private function createRoles(): array {
-        $roles = ['executor', 'customer', 'admin'];
+        $roles = ['executor', 'customer' ];
 
         return collect($roles)->map(fn (string $roleName) =>
-        Role::create([ 'name' => $roleName ]))->all();
+            Role::create([ 'name' => $roleName ]))->all();
     }
 
     /**
@@ -93,15 +92,15 @@ class DatabaseProductionSeeder extends Seeder
                         $store[$role] = [];
                     }
 
-                    $store[$role] += $store[$exists];
+                    array_push($store[$role], $store[$exists]);
                 } else {
                     if (!Arr::exists($store, $role)) {
                         $store[$role] = [];
                     }
 
-                    $createdPermission = Permission::create(['name' => $permission]);
+                    Permission::create(['name' => $permission]);
 
-                    $store[$role] += [$permission => $createdPermission];
+                    array_push($store[$role], $permission);
                 }
             });
 
@@ -119,7 +118,7 @@ class DatabaseProductionSeeder extends Seeder
         if (empty($array)) return null;
 
         foreach ($array as $roleName => $permissions) {
-            if (Arr::exists($permissions, $targetPermission)) return $roleName;
+            if (in_array($targetPermission, $permissions)) return $roleName;
         }
 
         return null;
